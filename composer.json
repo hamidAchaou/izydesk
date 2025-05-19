@@ -1,0 +1,12 @@
+{
+    "require": {
+        "doctrine/orm": "^3.3",
+        "symfony/maker-bundle": "^1.63",
+        "doctrine/annotations": "^2.0",
+        "symfony/serializer": "^7.2",
+        "symfony/validator": "^7.2",
+        "symfony/security-bundle": "^7.2",
+        "stripe/stripe-php": "^17.2",
+        "api-platform/api-pack": "*"
+    }
+}
