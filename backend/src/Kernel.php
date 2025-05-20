@@ -4,8 +4,18 @@ namespace App;
 
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+use Symfony\Component\Routing\RouteCollectionBuilder;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
+
+    protected function configureRoutes(RoutingConfigurator $routes): void
+    {
+        $routes->import('../src/Controller/', 'attribute');
+    }
+    
 }
