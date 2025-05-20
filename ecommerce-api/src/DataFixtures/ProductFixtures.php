@@ -15,40 +15,43 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create();
-
+    
+        // Base Picsum URLs (640x480 size) with different image IDs for variety
+        $picsumImageIds = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+    
         for ($i = 0; $i < 20; $i++) {
             $product = new Product();
             $product->setName($faker->words(3, true));
             $product->setDescription($faker->paragraph);
             $product->setPrice($faker->randomFloat(2, 10, 200));
             $product->setStock(mt_rand(1, 100));
-
-            // Set category using getReference
+    
             $product->setCategory($this->getReference('category_' . rand(0, 3), Category::class));
-            // $categoryReference = $this->getReference('category_' . rand(0, 3));
-            // $product->setCategory($categoryReference);
-
-            // Create 1 to 3 images per product
+    
             $imageCount = rand(1, 3);
             $mainImage = null;
-
+    
             for ($j = 0; $j < $imageCount; $j++) {
                 $productImage = new ProductImage();
-                $productImage->setImage($faker->imageUrl());
+    
+                // Pick a random Picsum ID and create the image URL
+                $randomId = $picsumImageIds[array_rand($picsumImageIds)];
+                $imageUrl = "https://picsum.photos/id/{$randomId}/640/480";
+    
+                $productImage->setImage($imageUrl);
+    
                 $productImage->setProduct($product);
                 $manager->persist($productImage);
-
+    
                 if ($j === 0) {
                     $mainImage = $productImage;
                 }
             }
-
-            // Set the main image relation
+    
             $product->setImage($mainImage);
-
             $manager->persist($product);
         }
-
+    
         $manager->flush();
     }
 
