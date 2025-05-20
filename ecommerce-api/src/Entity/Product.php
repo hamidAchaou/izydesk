@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
@@ -25,12 +27,24 @@ class Product
     #[ORM\Column(type: 'integer')]
     private ?int $stock = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $image = null;
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?ProductImage $image = null; // changed from string to relation
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
+
+    /**
+     * @var Collection<int, ProductImage>
+     */
+    #[ORM\OneToMany(targetEntity: ProductImage::class, mappedBy: 'product', cascade: ['persist', 'remove'])]
+    private Collection $images;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -81,12 +95,12 @@ class Product
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImage(): ?ProductImage
     {
         return $this->image;
     }
 
-    public function setImage(string $image): static
+    public function setImage(?ProductImage $image): static
     {
         $this->image = $image;
         return $this;
@@ -100,6 +114,35 @@ class Product
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductImage>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(ProductImage $image): static
+    {
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
+            $image->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(ProductImage $image): static
+    {
+        if ($this->images->removeElement($image)) {
+            if ($image->getProduct() === $this) {
+                $image->setProduct(null);
+            }
+        }
+
         return $this;
     }
 }

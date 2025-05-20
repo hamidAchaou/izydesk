@@ -3,11 +3,12 @@
 namespace App\DataFixtures;
 
 use App\Entity\Product;
+use App\Entity\ProductImage;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use App\Entity\Category; 
+use App\Entity\Category;
 
 class ProductFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -21,12 +22,29 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
             $product->setDescription($faker->paragraph);
             $product->setPrice($faker->randomFloat(2, 10, 200));
             $product->setStock(mt_rand(1, 100));
-            $product->setImage($faker->imageUrl());
 
-            // Utilise la référence définie dans CategoryFixtures
-            // $product->setCategory($this->getReference('category_' . rand(0, 3)));
+            // Set category using getReference
             $product->setCategory($this->getReference('category_' . rand(0, 3), Category::class));
+            // $categoryReference = $this->getReference('category_' . rand(0, 3));
+            // $product->setCategory($categoryReference);
 
+            // Create 1 to 3 images per product
+            $imageCount = rand(1, 3);
+            $mainImage = null;
+
+            for ($j = 0; $j < $imageCount; $j++) {
+                $productImage = new ProductImage();
+                $productImage->setImage($faker->imageUrl());
+                $productImage->setProduct($product);
+                $manager->persist($productImage);
+
+                if ($j === 0) {
+                    $mainImage = $productImage;
+                }
+            }
+
+            // Set the main image relation
+            $product->setImage($mainImage);
 
             $manager->persist($product);
         }
@@ -34,7 +52,6 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
-    // Indique à Symfony que cette fixture dépend de CategoryFixtures
     public function getDependencies(): array
     {
         return [
