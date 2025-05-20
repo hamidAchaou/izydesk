@@ -1,0 +1,148 @@
+/* Prevent scrolling on lightbox active */
+html.lb-disable-scrolling {
+  overflow: hidden;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Lightbox Overlay */
+.lightboxOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.95); /* Modern opacity */
+  width: 100%;
+  height: 100%;
+  display: none; /* Use JS to toggle this */
+}
+
+/* Lightbox Container */
+.lightbox {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 800px;
+  z-index: 10000;
+  text-align: center;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+/* Lightbox Image */
+.lightbox .lb-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px 8px 0 0;
+}
+
+/* Outer Container */
+.lb-outerContainer {
+  position: relative;
+  width: 100%;
+  background-color: white;
+  border-radius: 8px;
+}
+
+/* Loader */
+.lb-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none; /* Toggle visibility when loading */
+  font-size: 20px;
+  color: #666;
+}
+
+/* Navigation */
+.lb-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  pointer-events: none; /* Ensure buttons only activate on hover */
+}
+
+.lb-prev,
+.lb-next {
+  pointer-events: auto;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.lb-prev:hover,
+.lb-next:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/* Data Container */
+.lb-dataContainer {
+  padding: 15px;
+  background-color: #f9f9f9;
+  text-align: left;
+}
+
+.lb-data .lb-caption {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.lb-data .lb-number {
+  font-size: 12px;
+  color: #777;
+}
+
+/* Close Button */
+.lb-data .lb-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  background: url('../images/close.png') no-repeat center;
+  background-size: contain;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.lb-data .lb-close:hover {
+  opacity: 1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .lightbox {
+    width: 95%;
+    max-width: 600px;
+  }
+
+  .lb-prev,
+  .lb-next {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+}

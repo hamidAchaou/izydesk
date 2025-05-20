@@ -1,45 +1,45 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { CssBaseline, Container, createTheme, ThemeProvider } from '@mui/material';
+import React, { Suspense } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./assets/css/templatemo-hexashop.css";
+import "./assets/css/lightbox.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css"; // Custom styles
 
-import Home from './pages/Home';
-import ProductPage from './pages/ProductPage';
-import CartPage from './pages/CartPage';
-import CheckoutPage from './pages/CheckoutPage';
+import { Header, Footer, Loading } from "./components";
+import { FaChevronCircleUp } from "react-icons/fa";
+import useScrollToTop from "./hooks/useScrollToTop";
 
-import { CartProvider } from './context/CartContext';
-import Header from './components/Layout/Header';
-import Footer from './components/Layout/Footer';
+// Importing all pages from the index file
+import { Home, About, Contact, Products, ShowProducts } from "./pages";
+import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 
-const theme = createTheme({
-  palette: {
-    primary: { main: '#1976d2' },
-    secondary: { main: '#dc004e' },
-  },
-  typography: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-  },
-});
+const App = () => {
+  // Scroll-to-Top Button Logic
+  const scrollToTop = useScrollToTop();
 
-export default function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <CartProvider>
-        <BrowserRouter>
-          <Header />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/product/:id" element={<ProductPage />} />
-              <Route path="/cart" element={<CartPage />} />
-              <Route path="/checkout" element={<CheckoutPage />} />
-            </Routes>
-          </Container>
-          <Footer />
-        </BrowserRouter>
-      </CartProvider>
-    </ThemeProvider>
-  );
-}
+    <Router>
+      <Header />
+      <main className="main-content">
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            <Route path="/cart" element={<ShoppingCart />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/single-product/:id" element={<ShowProducts />} />
+          </Routes>
+        </Suspense>
 
+        {/* Scroll-to-Top Button */}
+        <button className="go-to-top" onClick={scrollToTop}>
+          <FaChevronCircleUp size={30} />
+        </button>
+      </main>
+      <Footer />
+    </Router>
+  );
+};
+
+export default App;

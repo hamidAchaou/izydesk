@@ -1,0 +1,119 @@
+:root {
+  --primary-color: #2a2a2a;
+  --secondary-color: #1e1e1e;
+  --accent-color: #f39c12;
+  --accent-hover-color: #e8584f;
+  --background-color: #ffffff;
+  --text-color: #333333;
+  --light-text-color: #aaaaaa;
+  --border-color: #eeeeee;
+  --border-radius: 12px;
+  --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  --transition-speed: 0.3s;
+}
+:root {
+  --primary-color: #2a2a2a;
+  --secondary-color: #1e1e1e;
+  --text-color: #ffffff;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: 1px solid var(--secondary-color);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.page-link:hover {
+  background-color: var(--secondary-color);
+  color: var(--background-color);
+  /* border: 1px solid var(--background-color); */
+}
+
+.page-item.active .page-link {
+  background-color: var(--secondary-color);
+  font-weight: bold;
+}
+
+#products {
+  margin-top: 26px;
+}
+
+.products-layout {
+  display: flex;
+  gap: 32px;
+  margin-top: 30px;
+}
+
+.filter-container {
+  flex: 1;
+  max-width: 250px;
+  padding: 20px;
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.filter-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.filter-select,
+.filter-input {
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 14px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: border-color 0.3s ease;
+  width: 100%;
+}
+
+.filter-select:focus,
+.filter-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+.products-grid {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pagination-container {
+  margin-top: 20px;
+}
+
+.price-values {
+  margin-top: 10px;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+}

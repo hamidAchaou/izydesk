@@ -1,0 +1,47 @@
+/* Pagination */
+.swiper-pagination {
+    margin-top: 5%;
+    bottom: 10px;
+    text-align: center;
+}
+/* Pagination */
+.swiper-pagination-bullet {
+    background-color: #666;
+    opacity: 0.5;
+  }
+  .swiper-pagination-bullet-active {
+    background-color: #333;
+    opacity: 1;
+  }
+  
+
+  /* Style for Swiper navigation arrows outside the slider */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #333;
+  font-size: 24px;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Move the right navigation arrow outside the card */
+.swiper-button-next {
+  right: -25px; /* Adjust as needed to move it further outside */
+}
+
+/* Move the left navigation arrow outside the card */
+.swiper-button-prev {
+  left: -25px; /* Adjust as needed to move it further outside */
+}
+
+.slider-image {
+  width: 100%; /* Ensures the image spans the full width of its container */
+  height: 100px; /* Fixed height for consistent appearance */
+  object-fit: cover; /* Maintains aspect ratio and crops excess */
+  border-radius: 8px; /* Optional: adds rounded corners */
+  }
+  
