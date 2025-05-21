@@ -1,24 +1,36 @@
-// CartItem.jsx
 import React from "react";
+import "./CartItem.css";
 
 const CartItem = ({ item, onRemove, onChangeQuantity }) => {
   return (
-    <div className="row border-top border-bottom">
-      <div className="row main align-items-center">
-        <div className="col-2">
-          <img className="img-fluid" src={item.img} alt={item.name} />
+    <div className="cart-item-container">
+      {/* Remove button in top-right corner */}
+      <button
+        className="remove-btn-top-right"
+        onClick={() => onRemove(item.id)}
+        title="Remove item"
+      >
+        ×
+      </button>
+
+      <div className="cart-item">
+        <div className="cart-item-img">
+          <img src={item.img} alt={item.name} />
         </div>
-        <div className="col">
-          <div className="row text-muted">{item.category}</div>
-          <div className="row">{item.name}</div>
+
+        <div className="cart-item-info">
+          <p className="item-category">{item.category}</p>
+          <h4 className="item-name">{item.name}</h4>
         </div>
-        <div className="col">
+
+        <div className="cart-item-quantity">
           <button onClick={() => onChangeQuantity(item.id, -1)}>-</button>
-          <span className="border">{item.quantity}</span>
+          <span>{item.quantity}</span>
           <button onClick={() => onChangeQuantity(item.id, 1)}>+</button>
         </div>
-        <div className="col">
-          €{item.price} <button className="close" onClick={() => onRemove(item.id)}>&#10005;</button>
+
+        <div className="cart-item-price">
+          <p>€{item.price}</p>
         </div>
       </div>
     </div>

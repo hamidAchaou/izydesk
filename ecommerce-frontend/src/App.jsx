@@ -14,7 +14,6 @@ import { Home, About, Contact, Products, ShowProducts } from "./pages";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 
 const App = () => {
-  // Scroll-to-Top Button Logic
   const scrollToTop = useScrollToTop();
 
   return (

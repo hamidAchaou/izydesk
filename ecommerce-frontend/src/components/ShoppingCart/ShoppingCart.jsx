@@ -1,7 +1,6 @@
 // ShoppingCart.jsx
 import React, { useState, useEffect } from "react";
 import CartItem from "./CartItem";
-import Summary from "./Summary";
 import "./ShoppingCart.css";
 
 const STORAGE_KEY = "cartItems";
@@ -17,33 +16,6 @@ const ShoppingCart = () => {
         console.error("Error parsing cartItems from localStorage", e);
       }
     }
-    // Fallback default items
-    return [
-      {
-        id: 1,
-        name: "Cotton T-shirt",
-        category: "Shirt",
-        img: "https://i.imgur.com/1GrakTl.jpg",
-        price: 44.0,
-        quantity: 1,
-      },
-      {
-        id: 2,
-        name: "Cotton T-shirt",
-        category: "Shirt",
-        img: "https://i.imgur.com/ba3tvGm.jpg",
-        price: 44.0,
-        quantity: 1,
-      },
-      {
-        id: 3,
-        name: "Cotton T-shirt",
-        category: "Shirt",
-        img: "https://i.imgur.com/pHQ3xT3.jpg",
-        price: 44.0,
-        quantity: 1,
-      },
-    ];
   });
 
   // Save cart items to localStorage whenever cartItems state changes
@@ -77,7 +49,7 @@ const ShoppingCart = () => {
     <main className="cart">
       <div className="card">
         <div className="row">
-          <div className="col-md-8 cart">
+          <div className="col-md-12 cart">
             <div className="title">
               <div className="row">
                 <div className="col">
@@ -104,15 +76,21 @@ const ShoppingCart = () => {
               ))
             )}
 
-            <div className="back-to-shop">
-              <a href="/products">
-                ←<span className="text-muted">Back to shop</span>
+            <div className="cart-footer-row d-flex justify-between">
+              <a href="/products" className="back-link">
+                ← Back to shop
               </a>
+              <div className="total-actions">
+                <div className="total-price w-100 row">
+                  <span className="total-label col-md-4">TOTAL</span>
+                  <span className="total-amount col-md-8">
+                    €{(totalPrice + 5).toFixed(2)}
+                  </span>
+                </div>
+              </div>
             </div>
+            <button className="btn">CHECKOUT</button>
           </div>
-
-          {/* Summary Section */}
-          <Summary cartItems={cartItems} totalPrice={totalPrice} />
         </div>
       </div>
     </main>

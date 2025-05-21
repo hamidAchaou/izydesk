@@ -88,45 +88,50 @@ const Header = () => {
                   )}
                 </button>
                 {isCartOpen && (
-  <div className="cart-dropdown">
-    {cartItems.length === 0 ? (
-      <p className="empty-cart">No items in cart</p>
-    ) : (
-      <>
-        <div className="cart-items-container">
-          {cartItems.map((item) => (
-            <div key={item.id} className="cart-card">
-              <img src={item.image} alt={item.name} className="cart-image" />
-              <div className="cart-details">
-                <div className="cart-title">{item.name}</div>
-                <div className="cart-meta">Qty: {item.quantity}</div>
-                <div className="cart-meta">
-                  €{(item.price * item.quantity).toFixed(2)}
-                </div>
-              </div>
-              <button
-                className="cart-delete-btn"
-                onClick={() => removeFromCart(item.id)}
-                title="Remove item"
-              >
-                ❌
-              </button>
-            </div>
-          ))}
-        </div>
-        <div className="cart-footer">
-          <div className="cart-total">
-            <strong>Total:</strong> €{totalPrice.toFixed(2)}
-          </div>
-          <Link to="/cart" className="go-to-cart-btn">
-            Go to Cart
-          </Link>
-        </div>
-      </>
-    )}
-  </div>
-)}
-
+                  <div className="cart-dropdown">
+                    {cartItems.length === 0 ? (
+                      <p className="empty-cart">No items in cart</p>
+                    ) : (
+                      <>
+                        <div className="cart-items-container">
+                          {cartItems.map((item) => (
+                            <div key={item.id} className="cart-card">
+                              <img
+                                src={item.image}
+                                alt={item.name}
+                                className="cart-image"
+                              />
+                              <div className="cart-details">
+                                <div className="cart-title">{item.name}</div>
+                                <div className="cart-meta">
+                                  Qty: {item.quantity}
+                                </div>
+                                <div className="cart-meta">
+                                  €{(item.price * item.quantity).toFixed(2)}
+                                </div>
+                              </div>
+                              <button
+                                className="cart-delete-btn"
+                                onClick={() => removeFromCart(item.id)}
+                                title="Remove item"
+                              >
+                                ❌
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="cart-footer">
+                          <div className="cart-total">
+                            <strong>Total:</strong> €{totalPrice.toFixed(2)}
+                          </div>
+                          <Link to="/cart" className="go-to-cart-btn">
+                            Go to Cart
+                          </Link>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                )}
               </div>
 
               <button

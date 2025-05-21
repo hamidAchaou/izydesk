@@ -36,21 +36,6 @@
   }
 }
 
-.summary {
-  background-color: #ddd;
-  border-top-right-radius: 1rem;
-  border-bottom-right-radius: 1rem;
-  padding: 4vh;
-  color: rgb(65, 65, 65);
-}
-
-@media(max-width:767px) {
-  .summary {
-    border-top-right-radius: unset;
-    border-bottom-left-radius: 1rem;
-  }
-}
-
 .summary .col-2 {
   padding: 0;
 }
@@ -167,4 +152,58 @@ a:hover {
   background-repeat: no-repeat;
   background-position-x: 95%;
   background-position-y: center;
+}
+
+
+.cart-footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2vh 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+
+.back-link {
+  font-weight: 500;
+  color: black;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.total-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.total-price {
+  text-align: right;
+}
+
+.total-label {
+  display: block;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.total-amount {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.btn {
+  background-color: black;
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #333;
 }
