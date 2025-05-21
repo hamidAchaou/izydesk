@@ -21,20 +21,19 @@ const ProductsCards = ({ products }) => {
                     </Link>
                   </li>
                   <li>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        addToCart({ id, image, name, price })
-                      }
-                      style={{
-                        background: "none",
-                        border: "none",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <FaShoppingCart />
-                    </button>
-                  </li>
+  <button
+    type="button"
+    onClick={() => {
+      console.log("Adding to cart:", { id, name, price });
+      addToCart({ id, image, name, price });
+    }}
+    
+    className="btnCart"
+    title="Add to cart"
+  >
+    <FaShoppingCart />
+  </button>
+</li>
                 </ul>
               </div>
               <img src={image} alt={name} />

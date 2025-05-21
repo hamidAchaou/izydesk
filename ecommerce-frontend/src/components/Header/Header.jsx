@@ -8,7 +8,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const { cartItems } = useCart(); // Use cart context here
+  const { cartItems, removeFromCart } = useCart();
 
   const cartRef = useRef(null);
   const location = useLocation();
@@ -87,49 +87,46 @@ const Header = () => {
                     <span className="cart-count">{cartItems.length}</span>
                   )}
                 </button>
-
                 {isCartOpen && (
-                  <div className="cart-dropdown">
-                    {cartItems.length === 0 ? (
-                      <p>No items in cart</p>
-                    ) : (
-                      <>
-                        <ul className="cart-items-list">
-                          {cartItems.map((item) => (
-                            <li key={item.id} className="cart-item">
-                              <div className="cart-item-content">
-                                <div className="title-img">
-                                  <img
-                                    src={`${item.image}`}
-                                    alt={item.name}
-                                    className="cart-item-image"
-                                  />
-                                  <div className="cart-item-details">
-                                    <strong className="cart-item-title">
-                                      {item.name}
-                                    </strong>
-                                    <div className="cart-item-quantity">
-                                      Qty: {item.quantity}
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="cart-item-price">
-                                  €{(item.price * item.quantity).toFixed(2)}
-                                </div>
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                        <div className="cart-total">
-                          <strong>Total:</strong> €{totalPrice.toFixed(2)}
-                        </div>
-                      </>
-                    )}
-                    <Link to="/cart" className="go-to-cart-btn">
-                      Go to Cart
-                    </Link>
-                  </div>
-                )}
+  <div className="cart-dropdown">
+    {cartItems.length === 0 ? (
+      <p className="empty-cart">No items in cart</p>
+    ) : (
+      <>
+        <div className="cart-items-container">
+          {cartItems.map((item) => (
+            <div key={item.id} className="cart-card">
+              <img src={item.image} alt={item.name} className="cart-image" />
+              <div className="cart-details">
+                <div className="cart-title">{item.name}</div>
+                <div className="cart-meta">Qty: {item.quantity}</div>
+                <div className="cart-meta">
+                  €{(item.price * item.quantity).toFixed(2)}
+                </div>
+              </div>
+              <button
+                className="cart-delete-btn"
+                onClick={() => removeFromCart(item.id)}
+                title="Remove item"
+              >
+                ❌
+              </button>
+            </div>
+          ))}
+        </div>
+        <div className="cart-footer">
+          <div className="cart-total">
+            <strong>Total:</strong> €{totalPrice.toFixed(2)}
+          </div>
+          <Link to="/cart" className="go-to-cart-btn">
+            Go to Cart
+          </Link>
+        </div>
+      </>
+    )}
+  </div>
+)}
+
               </div>
 
               <button

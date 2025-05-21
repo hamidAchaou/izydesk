@@ -30,6 +30,22 @@
   margin: 0 5px;
 }
 
+.btnCart {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: 1px solid var(--background-color);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btnCart:hover {
+  background-color: var(--secondary-color);
+  color: var(--background-color);
+  border: 1px solid var(--secondary-color);
+}
 .page-link {
   display: inline-block;
   padding: 10px 15px;
