@@ -24,8 +24,7 @@ const ProductsCards = ({ products }) => {
                     <button
                       type="button"
                       onClick={() => {
-                        console.log("Adding to cart:", { id, name, price });
-                        addToCart({ id, image, name, price });
+                        addToCart({ id, image, name, price, quantity: 1 });
                       }}
                       className="btnCart"
                       title="Add to cart"

@@ -18,12 +18,14 @@ export const CartProvider = ({ children }) => {
       if (existing) {
         return prev.map((i) =>
           i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+
         );
       } else {
-        return [...prev, { ...item, quantity: 1 }];
+        return [...prev, { ...item }];
       }
     });
   };
+  
 
   const removeFromCart = (id) => {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
