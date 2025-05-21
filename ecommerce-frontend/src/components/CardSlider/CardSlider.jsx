@@ -28,6 +28,7 @@ const CardSlider = ({ products }) => {
       {products.map((product, index) => (
         <SwiperSlide key={index}>
           <SlideItem
+            id={product.id}
             image={product.image}
             title={product.title}
             price={product.price}

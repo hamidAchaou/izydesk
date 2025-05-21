@@ -1,43 +1,46 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faStar, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import "./SlideItem.css"; // Assuming styles are in SlideItem.css
+import { Link } from "react-router-dom";
+import { FaEye, FaShoppingCart } from "react-icons/fa";
+import { useCart } from "../../context/CartContext";
+import "./SlideItem.css";
 
-const SlideItem = ({ image, title, price, link }) => {
+const SlideItem = ({ id, image, title, price }) => {
+  const { addToCart } = useCart();
+
   return (
     <div className="item">
       <div className="thumb">
         <div className="hover-content">
           <ul>
+          <li>
+    <Link to={`products/single-product/${id}`}>
+      <FaEye />
+    </Link>
+  </li>
             <li>
-              <a href={link} aria-label="View product">
-                <FontAwesomeIcon icon={faEye} />
-              </a>
-            </li>
-            <li>
-              <a href={link} aria-label="Add to wishlist">
-                <FontAwesomeIcon icon={faStar} />
-              </a>
-            </li>
-            <li>
-              <a href={link} aria-label="Add to cart">
-                <FontAwesomeIcon icon={faShoppingCart} />
-              </a>
+              <button
+                type="button"
+                onClick={() => {
+                  console.log("Adding to cart:", { id, title, price });
+                  addToCart({ id, image, title, price });
+                }}
+                className="btnCart"
+                title="Add to cart"
+              >
+                <FaShoppingCart />
+              </button>
             </li>
           </ul>
         </div>
-        <img className="slider-image" src={image} alt={title || "Product image"} />
+        <img
+          className="slider-image"
+          src={image}
+          alt={title || "Product image"}
+        />
       </div>
       <div className="down-content">
         <h4>{title}</h4>
         <span>{price}</span>
-        <ul className="stars">
-          {[...Array(5)].map((_, index) => (
-            <li key={index}>
-              <FontAwesomeIcon icon={faStar} />
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );

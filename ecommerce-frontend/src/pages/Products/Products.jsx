@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import ReactPaginate from "react-paginate";
-import { Slider } from "@mui/material";
 import ProductsCards from "./ProductsCards/ProductsCards";
+import FilterCard from "./FilterCard/FilterCard";
 import { getProducts, getCategories } from "../../api";
 import "./Products.css";
 
@@ -18,6 +18,7 @@ const Products = () => {
 
   const productsPerPage = 6;
 
+  // Fetch products and categories
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,16 +26,8 @@ const Products = () => {
           getProducts(),
           getCategories(),
         ]);
-
         setProducts(productRes.data);
         setCategories(categoryRes.data);
-
-        // Determine min and max price from data
-        const prices = productRes.data.map((p) => p.price);
-        const min = Math.min(...prices);
-        const max = Math.max(...prices);
-
-        setPriceRange([min, max]);
         setFilteredProducts(productRes.data);
       } catch (err) {
         setError("Failed to fetch products or categories.");
@@ -43,39 +36,61 @@ const Products = () => {
         setLoading(false);
       }
     };
-
     fetchData();
   }, []);
 
+  // Apply category filter
   useEffect(() => {
     const applyFilters = () => {
       let filtered = [...products];
-
       if (selectedCategoryId) {
         filtered = filtered.filter(
           (product) => product.category?.id === parseInt(selectedCategoryId)
         );
       }
-
-      filtered = filtered.filter(
-        (product) => product.price >= priceRange[0] && product.price <= priceRange[1]
-      );
-
       setFilteredProducts(filtered);
       setCurrentPage(0);
     };
-
     applyFilters();
-  }, [products, selectedCategoryId, priceRange]);
+  }, [products, selectedCategoryId]);
+
+  // Adjust price slider range on category filter
+  useEffect(() => {
+    if (filteredProducts.length > 0) {
+      const prices = filteredProducts.map((p) => p.price);
+      setPriceRange([Math.min(...prices), Math.max(...prices)]);
+    }
+  }, [filteredProducts]);
+
+  const handlePriceChange = (_, newValue) => {
+    setPriceRange(newValue);
+  };
+
+  const filteredAndPricedProducts = useMemo(() => {
+    return filteredProducts.filter(
+      (product) =>
+        product.price >= priceRange[0] && product.price <= priceRange[1]
+    );
+  }, [filteredProducts, priceRange]);
 
   const paginatedProducts = useMemo(() => {
     const startIndex = currentPage * productsPerPage;
-    return filteredProducts.slice(startIndex, startIndex + productsPerPage);
-  }, [filteredProducts, currentPage]);
+    return filteredAndPricedProducts.slice(startIndex, startIndex + productsPerPage);
+  }, [filteredAndPricedProducts, currentPage]);
 
   const handlePageChange = useCallback(({ selected }) => {
     setCurrentPage(selected);
   }, []);
+
+  const sliderMin =
+    filteredProducts.length > 0
+      ? Math.min(...filteredProducts.map((p) => p.price))
+      : 0;
+
+  const sliderMax =
+    filteredProducts.length > 0
+      ? Math.max(...filteredProducts.map((p) => p.price))
+      : 1000;
 
   return (
     <section className="section" id="products">
@@ -84,37 +99,15 @@ const Products = () => {
         <p className="section-description">Browse through a wide range of our products.</p>
 
         <div className="products-layout">
-          <aside className="filter-container">
-            <h3 className="filter-title">Filter by</h3>
-
-            <label htmlFor="category">Category</label>
-            <select
-              id="category"
-              value={selectedCategoryId}
-              onChange={(e) => setSelectedCategoryId(e.target.value)}
-              className="filter-select"
-            >
-              <option value="">All Categories</option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-
-            <label>Price Range</label>
-            <Slider
-              value={priceRange}
-              min={Math.min(...products.map(p => p.price))}
-              max={Math.max(...products.map(p => p.price))}
-              onChange={(_, newValue) => setPriceRange(newValue)}
-              valueLabelDisplay="auto"
-              sx={{ width: "90%", mt: 2 }}
-            />
-            <div className="price-values">
-              <span>${priceRange[0]}</span> - <span>${priceRange[1]}</span>
-            </div>
-          </aside>
+          <FilterCard
+            categories={categories}
+            selectedCategoryId={selectedCategoryId}
+            onCategoryChange={setSelectedCategoryId}
+            priceRange={priceRange}
+            onPriceChange={handlePriceChange}
+            sliderMin={sliderMin}
+            sliderMax={sliderMax}
+          />
 
           <main className="products-grid">
             {loading && <p>Loading products...</p>}
@@ -128,12 +121,12 @@ const Products = () => {
               <p>No products match your filters.</p>
             )}
 
-            {!loading && !error && filteredProducts.length > productsPerPage && (
+            {!loading && !error && filteredAndPricedProducts.length > productsPerPage && (
               <div className="pagination-container">
                 <ReactPaginate
                   previousLabel="<"
                   nextLabel=">"
-                  pageCount={Math.ceil(filteredProducts.length / productsPerPage)}
+                  pageCount={Math.ceil(filteredAndPricedProducts.length / productsPerPage)}
                   onPageChange={handlePageChange}
                   containerClassName="pagination"
                   pageClassName="page-item"
