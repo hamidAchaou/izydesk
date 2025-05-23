@@ -1,10 +1,8 @@
 <?php
-
 namespace App\DTO;
 
 use App\Entity\Product;
 use Symfony\Component\Serializer\Annotation\Groups;
-use App\Entity\Category;
 
 class ProductDTO
 {
@@ -27,7 +25,10 @@ class ProductDTO
     public array $images = [];
 
     #[Groups(['product:read'])]
-    public ?array $category = null; // category info as array (id + name)
+    public ?array $category = null;
+
+    #[Groups(['product:read'])]
+    public int $stock;
 
     public static function fromEntity(Product $product): self
     {
@@ -41,6 +42,7 @@ class ProductDTO
             fn($img) => $img->getImage(),
             $product->getImages()->toArray()
         );
+        $dto->stock = $product->getStock(); // ✅ Set the stock value
 
         $category = $product->getCategory();
         if ($category) {

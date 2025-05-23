@@ -1,64 +1,49 @@
-import React, { createContext, useReducer, useContext, useMemo } from 'react';
+import { createContext, useContext, useState, useEffect } from "react";
 
 const CartContext = createContext();
 
-const initialState = {
-  items: [], // { product, quantity }
-};
-
-function cartReducer(state, action) {
-  switch (action.type) {
-    case 'ADD_ITEM': {
-      const product = action.payload;
-      const exists = state.items.find(i => i.product.id === product.id);
-      if (exists) {
-        return {
-          ...state,
-          items: state.items.map(i =>
-            i.product.id === product.id ? { ...i, quantity: i.quantity + 1 } : i
-          ),
-        };
-      }
-      return { ...state, items: [...state.items, { product, quantity: 1 }] };
-    }
-    case 'REMOVE_ITEM':
-      return {
-        ...state,
-        items: state.items.filter(i => i.product.id !== action.payload),
-      };
-    case 'UPDATE_QUANTITY':
-      return {
-        ...state,
-        items: state.items.map(i =>
-          i.product.id === action.payload.id
-            ? { ...i, quantity: action.payload.quantity }
-            : i
-        ),
-      };
-    case 'CLEAR_CART':
-      return initialState;
-    default:
-      return state;
-  }
-}
-
 export const CartProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(cartReducer, initialState);
+  const [cartItems, setCartItems] = useState(() => {
+    const savedCart = localStorage.getItem("cartItems");
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
 
-  const addItem = (product) => dispatch({ type: 'ADD_ITEM', payload: product });
-  const removeItem = (id) => dispatch({ type: 'REMOVE_ITEM', payload: id });
-  const updateQuantity = (id, quantity) => dispatch({ type: 'UPDATE_QUANTITY', payload: { id, quantity } });
-  const clearCart = () => dispatch({ type: 'CLEAR_CART' });
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
 
-  const totalPrice = useMemo(() => 
-    state.items.reduce((sum, i) => sum + i.product.price * i.quantity, 0), 
-  [state.items]);
+  const addToCart = (item) => {
+    setCartItems((prev) => {
+      const existing = prev.find((i) => i.id === item.id);
+      if (existing) {
+        return prev.map((i) =>
+          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
 
-  return (
-    <CartContext.Provider value={{ cart: state, addItem, removeItem, updateQuantity, clearCart, totalPrice }}>
-      {children}
-    </CartContext.Provider>
-  );
+        );
+      } else {
+        return [...prev, { ...item }];
+      }
+    });
+  };
+  
+
+  const removeFromCart = (id) => {
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const value = {
+    cartItems,
+    addToCart,
+    removeFromCart,
+  };
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 
-export const useCart = () => useContext(CartContext);
+export const useCart = () => {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error("useCart must be used within a CartProvider");
+  }
+  return context;
+};

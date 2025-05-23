@@ -1,0 +1,62 @@
+:root {
+  --primary-color: #2a2a2a;
+  --secondary-color: #1e1e1e;
+  --accent-color: #f39c12;
+  --accent-hover-color: #e67e22;
+  --background-color: #ffffff;
+  --text-color: #f0f0f0;
+  --light-text-color: #aaaaaa;
+  --border-color: #eeeeee;
+}
+
+.admin-sidebar {
+  width: 240px;
+  height: 100vh;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: 20px;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-title {
+  color: var(--accent-color);
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  margin-bottom: 1rem;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.sidebar-link:hover {
+  background-color: var(--secondary-color);
+  color: var(--accent-color);
+}
+
+.sidebar-link.active {
+  background-color: var(--secondary-color);
+  color: var(--accent-color);
+}
+
+.sidebar-icon {
+  font-size: 1.2rem;
+}

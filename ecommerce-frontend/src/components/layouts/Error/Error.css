@@ -1,0 +1,17 @@
+.error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh; /* Adjust height based on your layout */
+    background-color: #fff8f8; /* Soft red background for errors */
+    border: 1px solid #ffcccc; /* Optional border for emphasis */
+    color: #ff3333; /* Text color for error messages */
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  
+  .error-message {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
