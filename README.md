@@ -45,13 +45,22 @@ DATABASE_URL="mysql://root:@127.0.0.1:3306/eizydesk"
 
 ```bash
 php bin/console doctrine:database:create
+php bin/console make:migration
 php bin/console doctrine:migrations:migrate
 php bin/console doctrine:fixtures:load
 ```
 
 > This will create the database schema and populate it with default data including the admin account.
 
-### 4. Start the Symfony Development Server
+### 4. Add this in .env
+
+```bash
+FRONTEND_ORIGIN=http://localhost:3000
+JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
+JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
+JWT_PASSPHRASE=51ac1e610b43232b3eb363e62cd12538a7fed682eb5797ecd12f8e9a97f13e3e
+```
+### 5. Start the Symfony Development Server
 
 ```bash
 symfony server:start
@@ -65,7 +74,7 @@ php -S localhost:8000 -t public
 
 ---
 
-### 5. Frontend Setup (React)
+### 6. Frontend Setup (React)
 
 ```bash
 cd ../ecommerce-frontend
