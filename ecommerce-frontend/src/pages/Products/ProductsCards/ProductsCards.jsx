@@ -16,7 +16,7 @@ const ProductsCards = ({ products }) => {
               <div className="hover-content">
                 <ul>
                   <li>
-                    <Link to={`single-product/${id}`}>
+                    <Link to={`single-product/${id}`} aria-label={`Voir les détails de ${name}`}>
                       <FaEye />
                     </Link>
                   </li>
@@ -33,20 +33,21 @@ const ProductsCards = ({ products }) => {
                         });
                       }}
                       className="btnCart"
-                      title="Add to cart"
+                      title="Ajouter au panier"
+                      aria-label={`Ajouter ${name} au panier`}
                     >
                       <FaShoppingCart />
                     </button>
                   </li>
                 </ul>
               </div>
-              {/* Display first image if available */}
+              {/* Affiche la première image si disponible, sinon une image par défaut */}
               {images && images.length > 0 ? (
                 <img 
                   src={images[0]} 
                   alt={name} 
                   onError={(e) => {
-                    e.target.src = '/path/to/default-image.jpg'; // Fallback image
+                    e.target.src = '/path/to/default-image.jpg';
                   }}
                 />
               ) : (
@@ -55,7 +56,7 @@ const ProductsCards = ({ products }) => {
             </div>
             <div className="down-content">
               <h4>{name}</h4>
-              <span>${price.toFixed(2)}</span>
+              <span>{price.toFixed(2)} €</span>
               {category && <p className="category">{category.name}</p>}
             </div>
           </div>

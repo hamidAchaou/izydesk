@@ -28,9 +28,9 @@ const OrdersTable = ({
           <TableHead sx={{ backgroundColor: "var(--primary-color)" }}>
             <TableRow>
               <TableCell />
-              <TableCell sx={{ color: "var(--background-color)" }}>Order ID</TableCell>
+              <TableCell sx={{ color: "var(--background-color)" }}>ID de commande</TableCell>
               <TableCell sx={{ color: "var(--background-color)" }}>Date</TableCell>
-              <TableCell sx={{ color: "var(--background-color)" }}>Status</TableCell>
+              <TableCell sx={{ color: "var(--background-color)" }}>Statut</TableCell>
               <TableCell sx={{ color: "var(--background-color)" }}>Total</TableCell>
               <TableCell sx={{ color: "var(--background-color)" }}>Actions</TableCell>
             </TableRow>

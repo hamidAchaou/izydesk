@@ -32,11 +32,11 @@ const PromoCard = () => {
         },
       }}
     >
-      {/* Background Image */}
+      {/* Image de fond */}
       <CardMedia
         component="img"
-        image="/assets/images/baner-right-image-02.jpg" // ✅ Use your image
-        alt="Promo Banner"
+        image="/assets/images/baner-right-image-02.jpg" // ✅ Utilisez votre image
+        alt="Bannière Promo"
         sx={{
           position: "absolute",
           top: 0,
@@ -49,7 +49,7 @@ const PromoCard = () => {
         }}
       />
 
-      {/* Text Overlay */}
+      {/* Texte en superposition */}
       <CardContent
         sx={{
           position: "relative",
@@ -68,7 +68,7 @@ const PromoCard = () => {
             fontSize: { xs: "2rem", md: "2.75rem" },
           }}
         >
-          Style That Inspires
+          Un style qui inspire
         </Typography>
 
         <Typography
@@ -80,7 +80,7 @@ const PromoCard = () => {
             lineHeight: 1.6,
           }}
         >
-          Discover our latest fashion and lifestyle essentials. Curated for modern trends. Click below and elevate your style today.
+          Découvrez nos dernières tendances mode et lifestyle. Sélectionnées pour les tendances modernes. Cliquez ci-dessous et rehaussez votre style dès aujourd’hui.
         </Typography>
 
         <Box>
@@ -103,7 +103,7 @@ const PromoCard = () => {
               },
             }}
           >
-            Visit Shop
+            Visiter la boutique
           </Button>
         </Box>
       </CardContent>

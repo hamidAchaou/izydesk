@@ -5,17 +5,17 @@ import TeamMember from "./TeamMember";
 const teamMembers = [
   {
     name: "Ragnar Lodbrok",
-    role: "Product Caretaker",
+    role: "Responsable Produits",
     image: "assets/images/omar.jpg",
   },
   {
     name: "Lagertha",
-    role: "Project Manager",
+    role: "Cheffe de Projet",
     image: "assets/images/team-member-02.jpg",
   },
   {
     name: "Bjorn Ironside",
-    role: "Lead Developer",
+    role: "Développeur Principal",
     image: "assets/images/team-member-03.jpg",
   },
 ];
@@ -26,10 +26,9 @@ const TeamSection = () => (
       <div className="row">
         <div className="col-lg-12">
           <div className="section-heading">
-            <h2>Our Amazing Team</h2>
+            <h2>Notre Équipe Exceptionnelle</h2>
             <span>
-              Details to details is what makes Hexashop different from the other
-              themes.
+              Le souci du détail est ce qui rend AtlacdpsShop unique par rapport aux autres plateformes.
             </span>
           </div>
         </div>

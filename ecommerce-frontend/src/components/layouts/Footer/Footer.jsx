@@ -7,16 +7,14 @@ const Footer = () => {
     <footer className="modern-footer">
       <div className="container">
         <div className="row">
-          {/* Logo and Contact Info */}
+          {/* Logo et Informations de contact */}
           <div className="col-lg-3">
             <div className="footer-section">
-              <img src={Logo} alt="Hamid Achaou Logo" className="footer-logo" />
+              <img src={Logo} alt="Logo de la boutique" className="footer-logo" />
               <ul className="footer-contact">
-                <li>Morocco, Tangier</li>
+                <li>Maroc, Tanger</li>
                 <li>
-                  <a href="mailto:hamidachaou379@gmail.com">
-                    hamidachaou379@gmail.com
-                  </a>
+                  <a href="mailto:support@votreboutique.com">support@votreboutique.com</a>
                 </li>
                 <li>
                   <a href="tel:+212643320632">+212 6 43 32 06 32</a>
@@ -24,57 +22,67 @@ const Footer = () => {
               </ul>
             </div>
           </div>
-          {/* Technologies & Skills */}
+          {/* Catégories */}
           <div className="col-lg-3">
             <div className="footer-section">
-              <h4>Technologies</h4>
+              <h4>Catégories</h4>
               <ul>
-                <li>Laravel</li>
-                <li>React</li>
-                <li>PHP & MySQL</li>
-                <li>FastAPI</li>
+                <li><a href="/products?category=electronics">Électronique</a></li>
+                <li><a href="/products?category=clothing">Vêtements</a></li>
+                <li><a href="/products?category=accessories">Accessoires</a></li>
+                <li><a href="/products?category=home">Maison</a></li>
               </ul>
             </div>
           </div>
-          {/* Useful Links */}
+          {/* Liens utiles */}
           <div className="col-lg-3">
             <div className="footer-section">
-              <h4>Useful Links</h4>
+              <h4>Liens utiles</h4>
               <ul>
-                <li>
-                  <a href="https://github.com/hamidAchaou">GitHub</a>
-                </li>
-                <li>
-                  <a href="https://hamidachaou.github.io/Portfolio1/">
-                    Portfolio
-                  </a>
-                </li>
-                <li>
-                  <a href="https://hamidachaou.github.io/Portfolio1/#contact">
-                    Contact Me
-                  </a>
-                </li>
+                <li><a href="/">Accueil</a></li>
+                <li><a href="/products">Produits</a></li>
+                <li><a href="/cart">Panier</a></li>
+                <li><a href="/contact">Contactez-nous</a></li>
               </ul>
             </div>
           </div>
-          {/* Interests */}
+          {/* À propos & réseaux sociaux */}
           <div className="col-lg-3">
             <div className="footer-section">
-              <h4>Interests</h4>
-              <ul>
-                <li>Programming</li>
-                <li>Sports</li>
-                <li>Reading</li>
-                <li>New Technologies</li>
+              <h4>Suivez-nous</h4>
+              <ul className="social-icons">
+                <li>
+                  <a href="https://www.facebook.com/hamud.achaou" target="_blank" rel="noopener noreferrer">
+                    <FaFacebook />
+                  </a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
+                    <FaTwitter />
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.linkedin.com/in/hamid-achaou-093682253/" target="_blank" rel="noopener noreferrer">
+                    <FaLinkedin />
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.behance.net/" target="_blank" rel="noopener noreferrer">
+                    <FaBehance />
+                  </a>
+                </li>
               </ul>
+              <p className="footer-about">
+                Votre boutique en ligne de confiance, offrant des produits de qualité à des prix compétitifs.
+              </p>
             </div>
           </div>
         </div>
         <div className="under-footer">
           <p>
-            &copy; 2025 Hamid Achaou. All Rights Reserved.
+            &copy; 2025 Votre Boutique. Tous droits réservés.
             <br />
-            Design by{" "}
+            Design par{" "}
             <a
               href="https://hamidachaou.github.io/Portfolio1/"
               target="_blank"
@@ -83,28 +91,6 @@ const Footer = () => {
               Hamid Achaou
             </a>
           </p>
-          <ul className="social-icons">
-            <li>
-              <a href="https://www.facebook.com/hamud.achaou">
-                <FaFacebook />
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <FaTwitter />
-              </a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/in/hamid-achaou-093682253/">
-                <FaLinkedin />
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <FaBehance />
-              </a>
-            </li>
-          </ul>
         </div>
       </div>
     </footer>

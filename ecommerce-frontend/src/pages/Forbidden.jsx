@@ -5,6 +5,7 @@ import { Box, Typography, Button } from "@mui/material";
 const Forbidden = () => {
   return (
     <Box
+      role="alert"
       sx={{
         minHeight: "100vh",
         display: "flex",
@@ -21,10 +22,10 @@ const Forbidden = () => {
         403
       </Typography>
       <Typography variant="h5" gutterBottom>
-        Forbidden
+        Accès interdit
       </Typography>
       <Typography variant="body1" sx={{ mb: 3, color: "var(--light-text-color)" }}>
-        You don’t have permission to view this page.
+        Vous n’avez pas la permission d’accéder à cette page.
       </Typography>
       <Button
         variant="contained"
@@ -39,9 +40,9 @@ const Forbidden = () => {
           paddingY: 1.5,
           fontWeight: "bold",
         }}
+        aria-label="Retour à la page d’accueil"
       >
-        Go to Home
-
+        Retour à l’accueil
       </Button>
     </Box>
   );

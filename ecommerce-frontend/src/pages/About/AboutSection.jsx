@@ -13,28 +13,23 @@ const AboutSection = () => (
       <div className="row">
         <div className="col-lg-6">
           <div className="left-image">
-            <img src="assets/images/about-left-image.jpg" alt="" />
+            <img src="assets/images/about-left-image.jpg" alt="À propos de nous" />
           </div>
         </div>
         <div className="col-lg-6">
           <div className="right-content">
-            <h4>About Us &amp; Our Skills</h4>
+            <h4>À propos de nous &amp; nos compétences</h4>
             <span>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod kon tempor incididunt ut labore.
+              Nous sommes passionnés par la création de solutions innovantes et créatives qui répondent aux besoins de nos clients.
             </span>
             <div className="quote">
-              <FaQuoteLeft /> {/* Replaced the FontAwesome quote icon */}
+              <FaQuoteLeft />
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiuski smod kon tempor incididunt ut labore.
+                Notre objectif est de fournir une qualité exceptionnelle et un service fiable à chacun de nos projets.
               </p>
             </div>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod kon tempor incididunt ut labore et dolore magna aliqua ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip.
+              Avec une équipe expérimentée et dédiée, nous mettons tout en œuvre pour garantir la satisfaction client. Notre savoir-faire couvre plusieurs domaines allant du design à la technologie, avec un fort accent sur la performance et l’esthétique.
             </p>
             <ul>
               <li>

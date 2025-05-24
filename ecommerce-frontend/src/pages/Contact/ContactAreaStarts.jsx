@@ -1,12 +1,12 @@
 import React from "react";
-import { FaPaperPlane } from "react-icons/fa"; // Using modern icon for form submission
+import { FaPaperPlane } from "react-icons/fa"; // Icône moderne pour l'envoi du formulaire
 
 const ContactAreaStarts = () => {
   return (
     <section className="contact-us">
       <div className="container">
         <div className="row">
-          {/* Map Section */}
+          {/* Section Carte */} 
           <div className="col-lg-6">
             <div id="map" className="map-container">
               <iframe
@@ -16,18 +16,17 @@ const ContactAreaStarts = () => {
                 frameBorder="0"
                 style={{ borderRadius: "8px" }}
                 allowFullScreen
-                aria-label="Google Maps location of Complexe Hassani, Tangier"
+                aria-label="Emplacement Google Maps du Complexe Hassani, Tanger"
               ></iframe>
             </div>
           </div>
 
-          {/* Contact Form Section */}
+          {/* Section Formulaire de Contact */}
           <div className="col-lg-6">
             <header className="section-heading text-center">
-              <h2>Get In Touch</h2>
+              <h2>Contactez-nous</h2>
               <p>
-                We would love to hear from you. Drop us a message, and we’ll get
-                back to you as soon as possible.
+                Nous serions ravis de vous lire. Laissez-nous un message et nous vous répondrons dès que possible.
               </p>
             </header>
 
@@ -39,7 +38,7 @@ const ContactAreaStarts = () => {
                       name="name"
                       type="text"
                       id="name"
-                      placeholder="Your Name"
+                      placeholder="Votre nom"
                       required
                       className="input-field"
                     />
@@ -51,7 +50,7 @@ const ContactAreaStarts = () => {
                       name="email"
                       type="email"
                       id="email"
-                      placeholder="Your Email"
+                      placeholder="Votre adresse email"
                       required
                       className="input-field"
                     />
@@ -65,7 +64,7 @@ const ContactAreaStarts = () => {
                       name="message"
                       rows="6"
                       id="message"
-                      placeholder="Your Message"
+                      placeholder="Votre message"
                       required
                       className="input-field"
                     ></textarea>
@@ -74,7 +73,7 @@ const ContactAreaStarts = () => {
               </div>
               <div className="form-row">
                 <div className="col-lg-12 d-flex justify-content-center">
-                  <button type="submit" className="submit-button">
+                  <button type="submit" className="submit-button" aria-label="Envoyer le message">
                     <FaPaperPlane />
                   </button>
                 </div>

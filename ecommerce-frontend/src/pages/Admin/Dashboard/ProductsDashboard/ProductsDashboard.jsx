@@ -56,7 +56,7 @@ const ProductsDashboard = () => {
       setState((prev) => ({
         ...prev,
         loading: false,
-        error: err.response?.data?.message || "Failed to load data.",
+        error: err.response?.data?.message || "Échec du chargement des données.",
       }));
     }
   };
@@ -83,21 +83,21 @@ const ProductsDashboard = () => {
           products: prev.products.map((p) =>
             p.id === state.selectedProduct.id ? response.data : p
           ),
-          success: "Product updated successfully!",
+          success: "Produit mis à jour avec succès !",
         }));
       } else {
         response = await createProduct(productData);
         setState((prev) => ({
           ...prev,
           products: [...prev.products, response.data],
-          success: "Product created successfully!",
+          success: "Produit créé avec succès !",
         }));
       }
       setState((prev) => ({ ...prev, formOpen: false }));
     } catch (err) {
       setState((prev) => ({
         ...prev,
-        error: err.response?.data?.message || "Failed to save product.",
+        error: err.response?.data?.message || "Échec de l'enregistrement du produit.",
       }));
     }
   };
@@ -120,12 +120,12 @@ const ProductsDashboard = () => {
           (p) => p.id !== state.productToDelete.id
         ),
         deleteDialogOpen: false,
-        success: "Product deleted successfully!",
+        success: "Produit supprimé avec succès !",
       }));
     } catch (err) {
       setState((prev) => ({
         ...prev,
-        error: err.response?.data?.message || "Failed to delete product.",
+        error: err.response?.data?.message || "Échec de la suppression du produit.",
       }));
     }
   };
@@ -141,7 +141,7 @@ const ProductsDashboard = () => {
       </Box>
     );
   }
-  // CSS variables for colors
+  // Variables CSS pour les couleurs
   const colors = {
     primary: "var(--primary-color)",
     secondary: "var(--secondary-color)",
@@ -164,7 +164,7 @@ const ProductsDashboard = () => {
         }}
       >
         <Typography variant="h4" component="h1" sx={{ color: colors.primary }}>
-          Product Management
+          Gestion des produits
         </Typography>
         <Button
           variant="contained"
@@ -181,7 +181,7 @@ const ProductsDashboard = () => {
             boxShadow: "var(--box-shadow)",
           }}
         >
-          Add Product
+          Ajouter un produit
         </Button>
       </Box>
 
@@ -225,8 +225,8 @@ const ProductsDashboard = () => {
 
       <ConfirmDialog
         open={state.deleteDialogOpen}
-        title="Confirm Delete"
-        content={`Are you sure you want to delete "${state.productToDelete?.name}"?`}
+        title="Confirmer la suppression"
+        content={`Êtes-vous sûr de vouloir supprimer "${state.productToDelete?.name}" ?`}
         onCancel={() =>
           setState((prev) => ({ ...prev, deleteDialogOpen: false }))
         }

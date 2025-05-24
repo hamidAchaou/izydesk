@@ -15,7 +15,7 @@ const ShoppingCart = () => {
       const savedItems = localStorage.getItem(STORAGE_KEY);
       return savedItems ? JSON.parse(savedItems) : [];
     } catch (error) {
-      console.error("Failed to parse cart items from localStorage", error);
+      console.error("Échec de l'analyse des articles du panier depuis localStorage", error);
       return [];
     }
   });
@@ -57,12 +57,12 @@ const ShoppingCart = () => {
       });
 
       if (error) {
-        console.error("Stripe redirect error:", error.message);
-        alert("Unable to redirect to checkout.");
+        console.error("Erreur de redirection Stripe :", error.message);
+        alert("Impossible de rediriger vers le paiement.");
       }
     } catch (error) {
-      console.error("Checkout error:", error);
-      alert("Something went wrong during checkout.");
+      console.error("Erreur lors du paiement :", error);
+      alert("Une erreur est survenue pendant le paiement.");
     }
   };
 
@@ -71,7 +71,7 @@ const ShoppingCart = () => {
     0
   );
 
-  const formattedTotal = (totalAmount + 5).toFixed(2); // +5 for shipping
+  const formattedTotal = (totalAmount + 5).toFixed(2); // +5 pour les frais de livraison
 
   return (
     <main className="cart">
@@ -81,16 +81,16 @@ const ShoppingCart = () => {
             <div className="title">
               <div className="row">
                 <div className="col">
-                  <h4><b>Shopping Cart</b></h4>
+                  <h4><b>Panier</b></h4>
                 </div>
                 <div className="col align-self-center text-right text-muted">
-                  {cartItems.length} {cartItems.length === 1 ? "item" : "items"}
+                  {cartItems.length} {cartItems.length === 1 ? "article" : "articles"}
                 </div>
               </div>
             </div>
 
             {cartItems.length === 0 ? (
-              <p>Your cart is empty.</p>
+              <p>Votre panier est vide.</p>
             ) : (
               cartItems.map((item) => (
                 <CartItem
@@ -104,7 +104,7 @@ const ShoppingCart = () => {
 
             <div className="cart-footer-row d-flex justify-between">
               <a href="/products" className="back-link">
-                ← Back to shop
+                ← Retour à la boutique
               </a>
               <div className="total-actions">
                 <div className="total-price">
@@ -116,7 +116,7 @@ const ShoppingCart = () => {
 
             {cartItems.length > 0 && (
               <button className="btn" onClick={handleCheckout}>
-                CHECKOUT
+                PAYER
               </button>
             )}
           </div>

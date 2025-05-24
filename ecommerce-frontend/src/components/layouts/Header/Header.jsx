@@ -29,9 +29,9 @@ const Header = () => {
   );
 
   const navItems = [
-    { path: "/", label: "Home" },
-    { path: "/about", label: "About" },
-    { path: "/products", label: "Products" },
+    { path: "/", label: "Accueil" },
+    { path: "/about", label: "À propos" },
+    { path: "/products", label: "Produits" },
     { path: "/contact", label: "Contact" },
   ];
 
@@ -69,8 +69,8 @@ const Header = () => {
     <header className="header-area header-sticky">
       <div className="container">
         <nav className="main-nav">
-          <Link to="/" className="logo" aria-label="Go to homepage">
-            <img src={logo} alt="Company Logo" className="logo-img" />
+          <Link to="/" className="logo" aria-label="Aller à la page d'accueil">
+            <img src={logo} alt="Logo de la société" className="logo-img" />
           </Link>
 
           <ul className={`nav ${menuOpen ? "active" : ""}`} ref={menuRef}>
@@ -88,22 +88,10 @@ const Header = () => {
             {user?.roles?.includes("ROLE_ADMIN") && (
               <li>
                 <Link to="/admin/dashboard/" onClick={() => setMenuOpen(false)}>
-                  Dashboard
+                  Tableau de bord
                 </Link>
               </li>
             )}
-
-            {/* {!user ? (
-              <li className="mobile-auth-items">
-                <Link to="/login" onClick={() => setMenuOpen(false)}>Login</Link>
-                <Link to="/register" onClick={() => setMenuOpen(false)}>Register</Link>
-              </li>
-            ) : (
-              <>
-                <li><Link to="/profile" onClick={() => setMenuOpen(false)}>Profile</Link></li>
-                <li><button onClick={handleLogout} className="logout-btn">Logout</button></li>
-              </>
-            )} */}
           </ul>
 
           <div className="header-actions">
@@ -111,6 +99,7 @@ const Header = () => {
               <button
                 onClick={() => setCartOpen((prev) => !prev)}
                 className="cart-btn"
+                aria-label="Afficher le panier"
               >
                 <AiOutlineShoppingCart />
                 {cartItems.length > 0 && (
@@ -121,7 +110,7 @@ const Header = () => {
               {cartOpen && (
                 <div className="cart-dropdown">
                   {cartItems.length === 0 ? (
-                    <p className="empty-cart">No items in cart</p>
+                    <p className="empty-cart">Aucun article dans le panier</p>
                   ) : (
                     <>
                       <div className="cart-items-container">
@@ -130,17 +119,24 @@ const Header = () => {
                             <img src={item.image} alt={item.name} />
                             <div>
                               <div>{item.name}</div>
-                              <div>Qty: {item.quantity}</div>
-                              <div>€{(item.price * item.quantity).toFixed(2)}</div>
+                              <div>Qté: {item.quantity}</div>
+                              <div>
+                                €{(item.price * item.quantity).toFixed(2)}
+                              </div>
                             </div>
-                            <button onClick={() => removeFromCart(item.id)}>❌</button>
+                            <button
+                              aria-label={`Supprimer ${item.name} du panier`}
+                              onClick={() => removeFromCart(item.id)}
+                            >
+                              ❌
+                            </button>
                           </div>
                         ))}
                       </div>
                       <div className="cart-footer">
                         <strong>Total:</strong> €{totalPrice.toFixed(2)}
                         <Link to="/cart" onClick={() => setCartOpen(false)}>
-                          Go to Cart
+                          Aller au panier
                         </Link>
                       </div>
                     </>
@@ -151,20 +147,42 @@ const Header = () => {
 
             {!user ? (
               <div className="auth-buttons">
-                <Link to="/login" className="auth-btn">Login</Link>
-                <Link to="/register" className="auth-btn">Register</Link>
+                <Link to="/login" className="auth-btn">
+                  Se connecter
+                </Link>
+                <Link to="/register" className="auth-btn">
+                  S'inscrire
+                </Link>
               </div>
             ) : (
               <div className="user-wrapper" ref={profileRef}>
-                <button onClick={() => setProfileOpen((prev) => !prev)} className="user-toggle-btn">
+                <button
+                  onClick={() => setProfileOpen((prev) => !prev)}
+                  className="user-toggle-btn"
+                  aria-haspopup="true"
+                  aria-expanded={profileOpen}
+                  aria-label="Ouvrir le menu utilisateur"
+                >
                   <FaUser />
-                  <span>{user.firstName}</span>
+                  <span className="user-name">{user.firstName}</span>
                   <span className="caret-icon">▼</span>
                 </button>
+
                 {profileOpen && (
                   <div className="user-dropdown">
-                    <Link to="/profile" onClick={() => setProfileOpen(false)}>Profile</Link>
-                    <button onClick={handleLogout}>Logout</button>
+                    <Link
+                      to="/profile"
+                      className="dropdown-link profilr-btn"
+                      onClick={() => setProfileOpen(false)}
+                    >
+                      Mon profil
+                    </Link>
+                    <button
+                      className="dropdown-link logout-btn"
+                      onClick={handleLogout}
+                    >
+                      Se déconnecter
+                    </button>
                   </div>
                 )}
               </div>
@@ -173,6 +191,7 @@ const Header = () => {
             <button
               className={`menu-trigger ${menuOpen ? "active" : ""}`}
               onClick={() => setMenuOpen((prev) => !prev)}
+              aria-label="Ouvrir le menu de navigation"
             >
               <span></span>
               <span></span>

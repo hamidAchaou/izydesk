@@ -6,35 +6,35 @@ const Summary = ({ cartItems, totalPrice }) => {
     <div className="col-md-4 summary">
       <div>
         <h5>
-          <b>Summary</b>
+          <b>Résumé</b>
         </h5>
       </div>
       <hr />
       <div className="row">
         <div className="col" style={{ paddingLeft: 0 }}>
-          ITEMS {cartItems.length}
+          ARTICLES {cartItems.length}
         </div>
         <div className="col text-right">€{totalPrice.toFixed(2)}</div>
       </div>
 
       <form>
-        <p>SHIPPING</p>
+        <p>LIVRAISON</p>
         <select>
-          <option className="text-muted">Standard-Delivery - €5.00</option>
+          <option className="text-muted">Livraison standard - 5,00 €</option>
         </select>
-        <p>GIVE CODE</p>
-        <input id="code" placeholder="Enter your code" />
+        <p>CODE PROMO</p>
+        <input id="code" placeholder="Entrez votre code" />
       </form>
 
       <div
         className="row"
         style={{ borderTop: "1px solid rgba(0,0,0,.1)", padding: "2vh 0" }}
       >
-        <div className="col">TOTAL PRICE</div>
+        <div className="col">PRIX TOTAL</div>
         <div className="col text-right">€{(totalPrice + 5).toFixed(2)}</div>
       </div>
 
-      <button className="btn">CHECKOUT</button>
+      <button className="btn">PASSER LA COMMANDE</button>
     </div>
   );
 };

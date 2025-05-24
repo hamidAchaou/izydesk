@@ -11,8 +11,8 @@ import {
   Alert,
 } from "@mui/material";
 
-// Constants for validation
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+// Constantes pour validation
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5Mo
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
 const ImageUploadDialog = ({ 
@@ -27,7 +27,7 @@ const ImageUploadDialog = ({
   const [validationErrors, setValidationErrors] = useState([]);
   const [existingImages, setExistingImages] = useState([]);
 
-  // Initialize with existing images and new files
+  // Initialiser avec images existantes et nouveaux fichiers
   useEffect(() => {
     const existing = initialImages.filter(img => typeof img === 'string' || img.url);
     const files = initialImages.filter(img => img instanceof File);
@@ -39,7 +39,7 @@ const ImageUploadDialog = ({
     })));
   }, [initialImages]);
 
-  // Clean up object URLs to prevent memory leaks
+  // Nettoyer les URLs objets pour éviter les fuites mémoire
   useEffect(() => {
     return () => {
       selectedFiles.forEach(({ preview }) => {
@@ -56,12 +56,12 @@ const ImageUploadDialog = ({
       if (!allowedFileTypes.includes(file.type)) {
         errors.push({
           fileName: file.name,
-          message: `Invalid file type (${file.type}). Allowed: ${allowedFileTypes.join(', ')}`
+          message: `Type de fichier invalide (${file.type}). Types autorisés : ${allowedFileTypes.join(', ')}`
         });
       } else if (file.size > maxFileSize) {
         errors.push({
           fileName: file.name,
-          message: `File too large (${(file.size / (1024 * 1024)).toFixed(2)}MB). Max: ${maxFileSize / (1024 * 1024)}MB`
+          message: `Fichier trop volumineux (${(file.size / (1024 * 1024)).toFixed(2)}Mo). Max : ${maxFileSize / (1024 * 1024)}Mo`
         });
       } else {
         validFiles.push(file);
@@ -108,7 +108,7 @@ const ImageUploadDialog = ({
   const handleUpload = () => {
     if (validationErrors.length > 0) return;
     
-    // Combine existing images with new files
+    // Combiner images existantes et nouveaux fichiers
     const allFiles = [
       ...existingImages,
       ...selectedFiles.map(({ file }) => file)
@@ -132,18 +132,18 @@ const ImageUploadDialog = ({
           mb: 2,
         }}
       >
-        Upload Images ({totalImagesCount} selected)
+        Télécharger des images ({totalImagesCount} sélectionnée{totalImagesCount > 1 ? 's' : ''})
       </DialogTitle>
 
       <DialogContent dividers>
-        {/* File selection button */}
+        {/* Bouton sélection fichiers */}
         <Button 
           variant="outlined" 
           component="label" 
           sx={{ mb: 2 }}
-          disabled={totalImagesCount >= 10} // Optional: limit total images
+          disabled={totalImagesCount >= 10} // Optionnel : limite à 10 images
         >
-          Select Images
+          Sélectionner des images
           <input
             type="file"
             hidden
@@ -155,26 +155,26 @@ const ImageUploadDialog = ({
 
         {totalImagesCount >= 10 && (
           <Alert severity="info" sx={{ mb: 2 }}>
-            Maximum of 10 images allowed
+            Maximum de 10 images autorisées
           </Alert>
         )}
 
-        {/* Validation errors */}
+        {/* Erreurs de validation */}
         {validationErrors.length > 0 && (
           <Alert severity="error" sx={{ mb: 2 }}>
             {validationErrors.map((error, index) => (
               <Box key={index} sx={{ fontSize: '0.875rem' }}>
-                <strong>{error.fileName}:</strong> {error.message}
+                <strong>{error.fileName} :</strong> {error.message}
               </Box>
             ))}
           </Alert>
         )}
 
-        {/* Existing images */}
+        {/* Images existantes */}
         {existingImages.length > 0 && (
           <Box sx={{ mb: 2 }}>
             <Typography variant="subtitle2" gutterBottom>
-              Existing Images:
+              Images existantes :
             </Typography>
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
               {existingImages.map((img, index) => (
@@ -190,11 +190,11 @@ const ImageUploadDialog = ({
           </Box>
         )}
 
-        {/* Newly selected files */}
+        {/* Nouveaux fichiers sélectionnés */}
         {selectedFiles.length > 0 && (
           <Box>
             <Typography variant="subtitle2" gutterBottom>
-              New Images:
+              Nouvelles images :
             </Typography>
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
               {selectedFiles.map(({ file, preview }, index) => (
@@ -205,7 +205,7 @@ const ImageUploadDialog = ({
                     color="primary"
                     variant="outlined"
                   />
-                  {/* Optional: Show thumbnail preview */}
+                  {/* Optionnel : aperçu miniature */}
                   {preview && (
                     <Box 
                       component="img"
@@ -231,7 +231,7 @@ const ImageUploadDialog = ({
 
         {totalImagesCount === 0 && (
           <Typography variant="body2" color="textSecondary">
-            No images selected
+            Aucune image sélectionnée
           </Typography>
         )}
       </DialogContent>
@@ -250,7 +250,7 @@ const ImageUploadDialog = ({
           }}
           variant="outlined"
         >
-          Cancel
+          Annuler
         </Button>
 
         <Button
@@ -265,7 +265,7 @@ const ImageUploadDialog = ({
             },
           }}
         >
-          Confirm Selection
+          Confirmer la sélection
         </Button>
       </DialogActions>
     </Dialog>

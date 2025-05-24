@@ -6,8 +6,8 @@ const SectionProducts = () => {
   return (
     <ProductProvider>
       <CategoryAreStarts
-        title="Latest Products"
-        details="Check out the newest arrivals in our store."
+        title="Derniers produits"
+        details="Découvrez les nouveautés dans notre magasin."
       />
     </ProductProvider>
   );

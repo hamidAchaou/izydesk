@@ -10,10 +10,10 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const DashboardMenu = () => {
   const menuItems = [
-    { label: "Dashboard", path: "/admin", icon: <DashboardIcon /> },
-    { label: "Orders", path: "/admin/orders", icon: <ShoppingCartIcon /> },
-    { label: "Products", path: "/admin/products", icon: <InventoryIcon /> },
-    { label: "Categories", path: "/admin/categories", icon: <CategoryIcon /> },
+    { label: "Tableau de bord", path: "/admin", icon: <DashboardIcon /> },
+    { label: "Commandes", path: "/admin/orders", icon: <ShoppingCartIcon /> },
+    { label: "Produits", path: "/admin/products", icon: <InventoryIcon /> },
+    { label: "Catégories", path: "/admin/categories", icon: <CategoryIcon /> },
   ];
 
   return (

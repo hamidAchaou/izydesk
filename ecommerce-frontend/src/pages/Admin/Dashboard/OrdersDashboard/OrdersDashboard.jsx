@@ -15,7 +15,7 @@ const OrdersDashboard = () => {
   useEffect(() => {
     fetchOrders()
       .then((res) => setOrders(res.data))
-      .catch(() => setError("Failed to load orders"))
+      .catch(() => setError("Échec du chargement des commandes"))
       .finally(() => setLoading(false));
   }, []);
   
@@ -29,8 +29,8 @@ const OrdersDashboard = () => {
         prevOrders.map((o) => (o.id === order.id ? { ...o, status: newStatus } : o))
       );
     } catch (error) {
-      console.error("Failed to update order status:", error);
-      alert("Failed to update order status.");
+      console.error("Échec de la mise à jour du statut de la commande :", error);
+      alert("Échec de la mise à jour du statut de la commande.");
     }
   };  
 
@@ -53,11 +53,11 @@ const OrdersDashboard = () => {
   return (
     <Box sx={{ maxWidth: 1000, mx: "auto", mt: 4, px: 2 }}>
       <Typography variant="h4" sx={{ fontWeight: "bold", color: "var(--primary-color)", mb: 2 }}>
-        My Orders
+        Mes commandes
       </Typography>
       {orders.length === 0 ? (
         <Typography align="center" sx={{ mt: 4 }}>
-          No orders found.
+          Aucune commande trouvée.
         </Typography>
       ) : (
         <OrdersTable

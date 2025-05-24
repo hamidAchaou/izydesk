@@ -65,8 +65,8 @@ const ProductFormDialog = ({
   const handleFormSubmit = async (data) => {
     try {
       setIsUploading(true);
-      
-      // Upload only new images (files), keep existing URLs
+
+      // Télécharge uniquement les nouvelles images (fichiers), conserve les URLs existantes
       const uploadedImageUrls = await Promise.all(
         images.map(async (img) => {
           if (img instanceof File || img instanceof Blob) {
@@ -84,7 +84,7 @@ const ProductFormDialog = ({
       await onSubmit(productData);
       onClose();
     } catch (error) {
-      console.error("Failed to save product:", error);
+      console.error("Échec de la sauvegarde du produit :", error);
     } finally {
       setIsUploading(false);
     }
@@ -99,7 +99,7 @@ const ProductFormDialog = ({
   };
 
   const handleImagesUploaded = (newImages) => {
-    setImages(prev => [...prev, ...newImages]);
+    setImages((prev) => [...prev, ...newImages]);
     setImageDialogOpen(false);
   };
 
@@ -134,20 +134,20 @@ const ProductFormDialog = ({
             mb: 2,
           }}
         >
-          {product ? "Edit Product" : "Add New Product"}
+          {product ? "Modifier le produit" : "Ajouter un nouveau produit"}
         </DialogTitle>
 
         <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
           <DialogContent dividers sx={{ pb: 2 }}>
-            {/* Product Fields */}
+            {/* Champs du produit */}
             <Controller
               name="name"
               control={control}
-              rules={{ required: "Product name is required" }}
+              rules={{ required: "Le nom du produit est requis" }}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Product Name"
+                  label="Nom du produit"
                   fullWidth
                   margin="normal"
                   error={!!errors.name}
@@ -174,7 +174,7 @@ const ProductFormDialog = ({
             <Controller
               name="description"
               control={control}
-              rules={{ required: "Description is required" }}
+              rules={{ required: "La description est requise" }}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -207,13 +207,13 @@ const ProductFormDialog = ({
               name="price"
               control={control}
               rules={{
-                required: "Price is required",
-                min: { value: 0, message: "Price must be positive" },
+                required: "Le prix est requis",
+                min: { value: 0, message: "Le prix doit être positif" },
               }}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Price"
+                  label="Prix"
                   type="number"
                   fullWidth
                   margin="normal"
@@ -242,11 +242,11 @@ const ProductFormDialog = ({
               name="stock"
               control={control}
               rules={{
-                required: "Stock is required",
-                min: { value: 0, message: "Stock must be positive" },
+                required: "Le stock est requis",
+                min: { value: 0, message: "Le stock doit être positif" },
                 pattern: {
                   value: /^[0-9]+$/,
-                  message: "Stock must be an integer",
+                  message: "Le stock doit être un entier",
                 },
               }}
               render={({ field }) => (
@@ -279,12 +279,12 @@ const ProductFormDialog = ({
             <Controller
               name="categoryId"
               control={control}
-              rules={{ required: "Category is required" }}
+              rules={{ required: "La catégorie est requise" }}
               render={({ field }) => (
                 <TextField
                   {...field}
                   select
-                  label="Category"
+                  label="Catégorie"
                   fullWidth
                   margin="normal"
                   error={!!errors.categoryId}
@@ -315,13 +315,13 @@ const ProductFormDialog = ({
 
             <Box mt={2}>
               <Button variant="outlined" onClick={handleOpenImageDialog}>
-                Upload Images
+                Télécharger des images
               </Button>
 
               <Box mt={1} sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
                 {images.length === 0 && (
                   <Box sx={{ color: "gray", fontStyle: "italic" }}>
-                    No images uploaded yet
+                    Aucune image téléchargée pour le moment
                   </Box>
                 )}
                 {images.map((img, index) => (
@@ -352,7 +352,7 @@ const ProductFormDialog = ({
               }}
               variant="outlined"
             >
-              Cancel
+              Annuler
             </Button>
 
             <Button
@@ -367,7 +367,7 @@ const ProductFormDialog = ({
                 },
               }}
             >
-              {(isSubmitting || isUploading) ? "Saving..." : "Save"}
+              {(isSubmitting || isUploading) ? "Enregistrement..." : "Enregistrer"}
             </Button>
           </DialogActions>
         </form>

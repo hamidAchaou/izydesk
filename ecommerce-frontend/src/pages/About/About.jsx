@@ -10,8 +10,8 @@ const About = () => (
   <div>
     {/* <MainBanner /> */}
     <HeroSection
-      title={"About Our Company"}
-      details={"Awesome, clean &amp; creative HTML5 Template"}
+      title={"À propos de notre entreprise"}
+      details={"Un modèle HTML5 impressionnant, propre et créatif"}
     />
     <AboutSection />
     <TeamSection />

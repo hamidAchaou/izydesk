@@ -20,11 +20,11 @@ import {
 } from "@mui/icons-material";
 
 const statusColors = {
-  delivered: "var(--success-color, #4caf50)", // green for delivered
-  shipped: "var(--accent-hover-color, #0056b3)", // blue hover accent for shipped
-  processing: "var(--secondary-color, #555555)", // medium gray
-  cancelled: "var(--error-color, #ff4d4f)", // red for cancelled
-  pending: "var(--warning-color, #fbc02d)", // yellow for pending
+  delivered: "var(--success-color, #4caf50)", // vert pour livré
+  shipped: "var(--accent-hover-color, #0056b3)", // bleu accent pour expédié
+  processing: "var(--secondary-color, #555555)", // gris moyen
+  cancelled: "var(--error-color, #ff4d4f)", // rouge pour annulé
+  pending: "var(--warning-color, #fbc02d)", // jaune pour en attente
 };
 
 const OrderRow = ({ order, onAction }) => {
@@ -53,10 +53,12 @@ const OrderRow = ({ order, onAction }) => {
           </IconButton>
         </TableCell>
         <TableCell>{order.id}</TableCell>
-        <TableCell>{new Date(order.date).toLocaleDateString()}</TableCell>
+        <TableCell>{new Date(order.date).toLocaleDateString("fr-FR")}</TableCell>
         <TableCell>
           <Chip
-            label={order.status.charAt(0).toUpperCase() + order.status.slice(1)} // capitalize label
+            label={
+              order.status.charAt(0).toUpperCase() + order.status.slice(1)
+            } // première lettre en majuscule
             icon={getStatusIcon(order.status)}
             variant="outlined"
             sx={{
@@ -68,7 +70,8 @@ const OrderRow = ({ order, onAction }) => {
           />
         </TableCell>
         <TableCell>
-          ${typeof order.total === "number" ? order.total.toFixed(2) : "0.00"}
+          €
+          {typeof order.total === "number" ? order.total.toFixed(2) : "0,00"}
         </TableCell>
         <TableCell>
           {order.status.toLowerCase() === "pending" && (
@@ -86,7 +89,7 @@ const OrderRow = ({ order, onAction }) => {
                   },
                 }}
               >
-                Mark as Shipped
+                Marquer comme Expédiée
               </Button>
 
               <Button
@@ -95,7 +98,7 @@ const OrderRow = ({ order, onAction }) => {
                 size="small"
                 onClick={() => onAction(order, "cancelled")}
               >
-                Cancel Order
+                Annuler la commande
               </Button>
             </>
           )}
@@ -106,7 +109,7 @@ const OrderRow = ({ order, onAction }) => {
               size="small"
               onClick={() => onAction(order, "delivered")}
             >
-              Mark as Delivered
+              Marquer comme Livrée
             </Button>
           )}
           {order.status.toLowerCase() === "delivered" && (
@@ -123,7 +126,7 @@ const OrderRow = ({ order, onAction }) => {
                 },
               }}
             >
-              Delivered
+              Livrée
             </Button>
           )}
 
@@ -141,7 +144,7 @@ const OrderRow = ({ order, onAction }) => {
                 },
               }}
             >
-              Cancelled
+              Annulée
             </Button>
           )}
         </TableCell>
@@ -162,19 +165,19 @@ const OrderRow = ({ order, onAction }) => {
                 variant="subtitle1"
                 sx={{ fontWeight: "bold", color: "var(--primary-color)" }}
               >
-                Items
+                Articles
               </Typography>
               <Table size="small">
                 <TableHead sx={{ backgroundColor: "var(--secondary-color)" }}>
                   <TableRow>
                     <TableCell sx={{ color: "var(--accent-color)" }}>
-                      Name
+                      Nom
                     </TableCell>
                     <TableCell sx={{ color: "var(--accent-color)" }}>
-                      Quantity
+                      Quantité
                     </TableCell>
                     <TableCell sx={{ color: "var(--accent-color)" }}>
-                      Price
+                      Prix
                     </TableCell>
                     <TableCell sx={{ color: "var(--accent-color)" }}>
                       Total
@@ -187,17 +190,19 @@ const OrderRow = ({ order, onAction }) => {
                       <TableCell>{item.name}</TableCell>
                       <TableCell>{item.quantity}</TableCell>
                       <TableCell>
-                        $
+                        €
                         {typeof item.price === "number"
-                          ? item.price.toFixed(2)
-                          : "0.00"}
+                          ? item.price.toFixed(2).replace(".", ",")
+                          : "0,00"}
                       </TableCell>
                       <TableCell>
-                        $
+                        €
                         {typeof item.price === "number" &&
                         typeof item.quantity === "number"
-                          ? (item.price * item.quantity).toFixed(2)
-                          : "0.00"}
+                          ? (item.price * item.quantity)
+                              .toFixed(2)
+                              .replace(".", ",")
+                          : "0,00"}
                       </TableCell>
                     </TableRow>
                   ))}

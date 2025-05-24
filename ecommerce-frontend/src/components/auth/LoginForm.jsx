@@ -33,7 +33,7 @@ const LoginForm = () => {
       loginUser(responseData);
       navigate("/");
     } catch (err) {
-      setError("Invalid email or password.");
+      setError("Email ou mot de passe invalide.");
     }
   };
 
@@ -46,7 +46,7 @@ const LoginForm = () => {
         alignItems="stretch"
         flexDirection={{ xs: "column", md: "row" }}
       >
-        {/* ➤ Login Card */}
+        {/* ➤ Carte de connexion */}
         <Card
           sx={{
             width: "100%",
@@ -58,7 +58,7 @@ const LoginForm = () => {
         >
           <CardContent>
             <Typography variant="h5" align="center" gutterBottom>
-              Login
+              Connexion
             </Typography>
 
             {error && (
@@ -81,10 +81,10 @@ const LoginForm = () => {
                 error={!!errors.email}
                 helperText={errors.email?.message}
                 {...register("email", {
-                  required: "Email is required",
+                  required: "L'email est requis",
                   pattern: {
                     value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                    message: "Invalid email address",
+                    message: "Adresse email invalide",
                   },
                 })}
               />
@@ -92,13 +92,13 @@ const LoginForm = () => {
               <TextField
                 margin="normal"
                 fullWidth
-                label="Password"
+                label="Mot de passe"
                 type="password"
                 error={!!errors.password}
                 helperText={errors.password?.message}
                 {...register("password", {
-                  required: "Password is required",
-                  minLength: { value: 6, message: "Minimum 6 characters" },
+                  required: "Le mot de passe est requis",
+                  minLength: { value: 6, message: "Minimum 6 caractères" },
                 })}
               />
 
@@ -117,21 +117,21 @@ const LoginForm = () => {
                 }}
                 disabled={isSubmitting}
               >
-                {isSubmitting ? "Logging in..." : "Login"}
+                {isSubmitting ? "Connexion en cours..." : "Se connecter"}
               </Button>
 
               <Typography variant="body2" align="center" sx={{ mt: 2 }}>
-                Don&apos;t have an account?{" "}
+                Vous n'avez pas de compte ?{" "}
                 <MuiLink component={Link} to="/register">
-                  Register
+                  Inscrivez-vous
                 </MuiLink>
               </Typography>
-              
-              {/* Add this new link to products page */}
+
+              {/* Nouveau lien vers la page produits */}
               <Typography variant="body2" align="center" sx={{ mt: 1 }}>
-                Browse our{" "}
+                Parcourez nos{" "}
                 <MuiLink component={Link} to="/products">
-                  Products
+                  Produits
                 </MuiLink>
               </Typography>
             </Box>

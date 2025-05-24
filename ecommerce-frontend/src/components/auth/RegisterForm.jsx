@@ -65,7 +65,7 @@ const RegisterForm = () => {
       const message =
         err.response?.data?.error ||
         err.message ||
-        "Registration failed. Please check your inputs.";
+        "L'inscription a échoué. Veuillez vérifier vos informations.";
       setError(message);
     }
   };
@@ -85,7 +85,7 @@ const RegisterForm = () => {
       >
         <CardContent>
           <Typography variant="h5" component="h1" gutterBottom align="center">
-            Create an Account
+            Créer un compte
           </Typography>
 
           {error && (
@@ -96,17 +96,17 @@ const RegisterForm = () => {
 
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <TextField
-              label="Full Name"
+              label="Nom complet"
               fullWidth
               margin="normal"
               autoComplete="name"
               error={!!errors.name}
               helperText={errors.name?.message}
               {...register("name", {
-                required: "Full Name is required",
+                required: "Le nom complet est obligatoire",
                 minLength: {
                   value: 3,
-                  message: "Minimum 3 characters",
+                  message: "Au moins 3 caractères",
                 },
               })}
             />
@@ -120,16 +120,16 @@ const RegisterForm = () => {
               error={!!errors.email}
               helperText={errors.email?.message}
               {...register("email", {
-                required: "Email is required",
+                required: "L'email est obligatoire",
                 pattern: {
                   value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: "Invalid email address",
+                  message: "Adresse email invalide",
                 },
               })}
             />
 
             <TextField
-              label="Password"
+              label="Mot de passe"
               type={showPassword ? "text" : "password"}
               fullWidth
               margin="normal"
@@ -140,7 +140,7 @@ const RegisterForm = () => {
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
-                      aria-label="toggle password visibility"
+                      aria-label="Afficher ou masquer le mot de passe"
                       onClick={togglePasswordVisibility}
                       edge="end"
                     >
@@ -150,16 +150,16 @@ const RegisterForm = () => {
                 ),
               }}
               {...register("password", {
-                required: "Password is required",
+                required: "Le mot de passe est obligatoire",
                 minLength: {
                   value: 6,
-                  message: "Minimum 6 characters",
+                  message: "Au moins 6 caractères",
                 },
               })}
             />
 
             <TextField
-              label="Confirm Password"
+              label="Confirmer le mot de passe"
               type={showConfirmPassword ? "text" : "password"}
               fullWidth
               margin="normal"
@@ -170,7 +170,7 @@ const RegisterForm = () => {
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
-                      aria-label="toggle password visibility"
+                      aria-label="Afficher ou masquer la confirmation du mot de passe"
                       onClick={toggleConfirmPasswordVisibility}
                       edge="end"
                     >
@@ -180,30 +180,30 @@ const RegisterForm = () => {
                 ),
               }}
               {...register("password_confirmation", {
-                required: "Please confirm your password",
+                required: "Veuillez confirmer votre mot de passe",
                 validate: (value) =>
-                  value === password || "Passwords do not match",
+                  value === password || "Les mots de passe ne correspondent pas",
               })}
             />
 
             <TextField
-              label="Phone"
+              label="Téléphone"
               fullWidth
               margin="normal"
               autoComplete="tel"
               error={!!errors.phone}
               helperText={errors.phone?.message}
               {...register("phone", {
-                required: "Phone is required",
+                required: "Le téléphone est obligatoire",
                 pattern: {
                   value: /^[0-9+\-() ]+$/,
-                  message: "Invalid phone number",
+                  message: "Numéro de téléphone invalide",
                 },
               })}
             />
 
             <TextField
-              label="Address"
+              label="Adresse"
               fullWidth
               margin="normal"
               multiline
@@ -230,20 +230,20 @@ const RegisterForm = () => {
               }}
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Registering..." : "Register"}
+              {isSubmitting ? "Inscription en cours..." : "S'inscrire"}
             </Button>
 
             <Typography variant="body2" align="center" sx={{ mt: 2 }}>
-              Already have an account?{" "}
+              Vous avez déjà un compte ?{" "}
               <MuiLink component={Link} to="/login">
-                Login
+                Connectez-vous
               </MuiLink>
             </Typography>
 
             <Typography variant="body2" align="center" sx={{ mt: 1 }}>
-              Continue shopping?{" "}
+              Continuer vos achats ?{" "}
               <MuiLink component={Link} to="/products">
-                Browse Products
+                Parcourir les produits
               </MuiLink>
             </Typography>
           </form>

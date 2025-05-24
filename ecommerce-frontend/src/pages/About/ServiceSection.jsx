@@ -25,10 +25,9 @@ const ServiceSection = () => (
       <div className="row">
         <div className="col-lg-12">
           <div className="section-heading">
-            <h2>Our Services</h2>
+            <h2>Nos Services</h2>
             <span>
-              Details to details is what makes Hexashop different from the other
-              themes.
+              Le souci du détail est ce qui distingue AtlacdpsShop des autres boutiques en ligne.
             </span>
           </div>
         </div>

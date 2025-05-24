@@ -65,7 +65,7 @@ const CategoryFormDialog = ({
           mb: 2,
         }}
       >
-        {category ? 'Edit Category' : 'Add New Category'}
+        {category ? 'Modifier la catégorie' : 'Ajouter une nouvelle catégorie'}
       </DialogTitle>
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -73,11 +73,11 @@ const CategoryFormDialog = ({
           <Controller
             name="name"
             control={control}
-            rules={{ required: 'Category name is required' }}
+            rules={{ required: 'Le nom de la catégorie est requis' }}
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Category Name"
+                label="Nom de la catégorie"
                 fullWidth
                 margin="normal"
                 error={!!errors.name}
@@ -117,7 +117,7 @@ const CategoryFormDialog = ({
             }}
             variant="outlined"
           >
-            Cancel
+            Annuler
           </Button>
 
           <Button
@@ -132,7 +132,7 @@ const CategoryFormDialog = ({
               },
             }}
           >
-            {isSubmitting ? 'Saving...' : 'Save'}
+            {isSubmitting ? 'Enregistrement...' : 'Enregistrer'}
           </Button>
         </DialogActions>
       </form>

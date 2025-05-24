@@ -25,13 +25,13 @@ const CategoryAreStarts = ({ title, details }) => {
         {latestProducts && latestProducts.length > 0 ? (
           <CardSlider products={latestProducts} />
         ) : (
-          <p>Loading products...</p>
+          <p>Chargement des produits...</p>
         )}
       </div>
 
       <div className="view-more-wrapper">
         <Link to="/products" className="view-more-link">
-          View More Products
+          Voir plus de produits
         </Link>
       </div>
     </section>

@@ -4,11 +4,10 @@ import "./CartItem.css";
 const CartItem = ({ item, onRemove, onChangeQuantity }) => {
   return (
     <div className="cart-item-container">
-      {/* Remove button in top-right corner */}
       <button
         className="remove-btn-top-right"
         onClick={() => onRemove(item.id)}
-        title="Remove item"
+        title="Supprimer l'article"
       >
         ×
       </button>

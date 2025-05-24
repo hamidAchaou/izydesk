@@ -6,7 +6,7 @@ import "./SlideItem.css";
 
 const SlideItem = ({ id, image, title, price }) => {
   const { addToCart } = useCart();
-console.log(image);
+  console.log(image);
 
   return (
     <div className="item">
@@ -14,7 +14,7 @@ console.log(image);
         <div className="hover-content">
           <ul>
             <li>
-              <Link to={`products/single-product/${id}`}>
+              <Link to={`products/single-product/${id}`} aria-label={`Voir les détails de ${title}`}>
                 <FaEye />
               </Link>
             </li>
@@ -22,11 +22,12 @@ console.log(image);
               <button
                 type="button"
                 onClick={() => {
-                  console.log("Adding to cart:", { id, title, price });
+                  console.log("Ajout au panier :", { id, title, price });
                   addToCart({ id, image, title, price });
                 }}
                 className="btnCart"
-                title="Add to cart"
+                title="Ajouter au panier"
+                aria-label={`Ajouter ${title} au panier`}
               >
                 <FaShoppingCart />
               </button>
@@ -36,13 +37,13 @@ console.log(image);
         <img
           className="slider-image"
           src={image}
-          alt={title || "Product image"}
+          alt={title || "Image du produit"}
           loading="lazy"
         />
       </div>
       <div className="down-content">
         <h4>{title}</h4>
-        <span>{price}</span>
+        <span>{price} €</span>
       </div>
     </div>
   );

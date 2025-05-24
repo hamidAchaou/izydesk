@@ -7,39 +7,33 @@ const ExploreAreaStarts = () => {
         <div className="row">
           <div className="col-lg-6">
             <div className="left-content">
-              <h2>Explore Our Products</h2>
+              <h2>Découvrez Nos Produits</h2>
               <span>
-                You are allowed to use this HexaShop HTML CSS template. You can
-                feel free to modify or edit this layout. You can convert this
-                template as any kind of ecommerce CMS theme as you wish.
+                Vous êtes autorisé à utiliser ce modèle HTML CSS HexaShop. Vous pouvez le modifier ou l’adapter librement. Vous pouvez également le convertir en thème CMS e-commerce de votre choix.
               </span>
               <div className="quote">
                 <i className="fa fa-quote-left"></i>
                 <p>
-                  You are not allowed to redistribute this template ZIP file on
-                  any other website.
+                  Vous n’êtes pas autorisé à redistribuer ce fichier ZIP du modèle sur un autre site web.
                 </p>
               </div>
               <p>
-                There are 5 pages included in this HexaShop Template and we are
-                providing it to you for absolutely free of charge at our
-                TemplateMo website. There are web development costs for us.
+                Ce modèle ATLASSHOOP comprend 5 pages et il vous est fourni
+                entièrement gratuitement sur notre site TemplateMo. Toutefois, il y a des coûts de développement web de notre côté.
               </p>
               <p>
-                If this template is beneficial for your website or business,
-                please kindly
+                Si ce modèle est utile pour votre site ou entreprise, merci de
                 <a
                   rel="nofollow"
                   href="https://paypal.me/templatemo"
                   target="_blank"
                 >
-                  support us
+                  nous soutenir
                 </a>
-                a little via PayPal. Please also tell your friends about our
-                great website. Thank you.
+                un peu via PayPal. N’hésitez pas aussi à en parler à vos amis. Merci.
               </p>
               <div className="main-border-button">
-                <a href="products.html">Discover More</a>
+                <a href="products.html">Découvrir Plus</a>
               </div>
             </div>
           </div>
@@ -48,24 +42,24 @@ const ExploreAreaStarts = () => {
               <div className="row">
                 <div className="col-lg-6">
                   <div className="leather">
-                    <h4>Leather Bags</h4>
-                    <span>Latest Collection</span>
+                    <h4>Sacs en Cuir</h4>
+                    <span>Nouvelle Collection</span>
                   </div>
                 </div>
                 <div className="col-lg-6">
                   <div className="first-image">
-                    <img src="assets/images/explore-image-01.jpg" alt="" />
+                    <img src="assets/images/explore-image-01.jpg" alt="Image 1" />
                   </div>
                 </div>
                 <div className="col-lg-6">
                   <div className="second-image">
-                    <img src="assets/images/explore-image-02.jpg" alt="" />
+                    <img src="assets/images/explore-image-02.jpg" alt="Image 2" />
                   </div>
                 </div>
                 <div className="col-lg-6">
                   <div className="types">
-                    <h4>Different Types</h4>
-                    <span>Over 304 Products</span>
+                    <h4>Différents Types</h4>
+                    <span>Plus de 304 Produits</span>
                   </div>
                 </div>
               </div>

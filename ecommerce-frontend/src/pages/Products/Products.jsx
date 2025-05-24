@@ -18,14 +18,10 @@ const Products = () => {
 
   const productsPerPage = 6;
 
-  // Fetch products and categories
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [productRes, categoryRes] = await Promise.all([
-          getProducts(),
-          getCategories(),
-        ]);
+        const [productRes, categoryRes] = await Promise.all([getProducts(), getCategories()]);
         setProducts(productRes.data);
         setCategories(categoryRes.data);
         setFilteredProducts(productRes.data);
@@ -39,37 +35,34 @@ const Products = () => {
     fetchData();
   }, []);
 
-  // Apply category filter
   useEffect(() => {
-    const applyFilters = () => {
-      let filtered = [...products];
-      if (selectedCategoryId) {
-        filtered = filtered.filter(
-          (product) => product.category?.id === parseInt(selectedCategoryId)
-        );
-      }
-      setFilteredProducts(filtered);
-      setCurrentPage(0);
-    };
-    applyFilters();
+    let filtered = [...products];
+    if (selectedCategoryId) {
+      filtered = filtered.filter(product => product.category?.id === parseInt(selectedCategoryId));
+    }
+    setFilteredProducts(filtered);
   }, [products, selectedCategoryId]);
 
-  // Adjust price slider range on category filter
+  // Initialiser priceRange seulement quand filteredProducts change après un filtre de catégorie
   useEffect(() => {
     if (filteredProducts.length > 0) {
-      const prices = filteredProducts.map((p) => p.price);
+      const prices = filteredProducts.map(p => p.price);
       setPriceRange([Math.min(...prices), Math.max(...prices)]);
     }
-  }, [filteredProducts]);
+  }, [selectedCategoryId, filteredProducts]);
 
-  const handlePriceChange = (_, newValue) => {
+  // Reset page quand priceRange change
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [priceRange]);
+
+  const handlePriceChange = (event, newValue) => {
     setPriceRange(newValue);
   };
 
   const filteredAndPricedProducts = useMemo(() => {
     return filteredProducts.filter(
-      (product) =>
-        product.price >= priceRange[0] && product.price <= priceRange[1]
+      product => product.price >= priceRange[0] && product.price <= priceRange[1]
     );
   }, [filteredProducts, priceRange]);
 
@@ -82,21 +75,17 @@ const Products = () => {
     setCurrentPage(selected);
   }, []);
 
-  const sliderMin =
-    filteredProducts.length > 0
-      ? Math.min(...filteredProducts.map((p) => p.price))
-      : 0;
-
-  const sliderMax =
-    filteredProducts.length > 0
-      ? Math.max(...filteredProducts.map((p) => p.price))
-      : 1000;
+  const [sliderMin, sliderMax] = useMemo(() => {
+    if (filteredProducts.length === 0) return [0, 1000];
+    const prices = filteredProducts.map(p => p.price);
+    return [Math.min(...prices), Math.max(...prices)];
+  }, [filteredProducts]);
 
   return (
     <section className="section" id="products">
       <div className="container">
-        <h1 className="section-title">Our Latest Products</h1>
-        <p className="section-description">Browse through a wide range of our products.</p>
+      <h1 className="section-title">Nos derniers produits</h1>
+      <p className="section-description">Parcourez notre large gamme de produits.</p>
 
         <div className="products-layout">
           <FilterCard
@@ -110,15 +99,15 @@ const Products = () => {
           />
 
           <main className="products-grid">
-            {loading && <p>Loading products...</p>}
-            {error && <p className="error">{error}</p>}
+          {loading && <p>Chargement des produits...</p>}
+          {error && <p className="error">{error}</p>}
 
             {!loading && !error && paginatedProducts.length > 0 && (
               <ProductsCards products={paginatedProducts} />
             )}
 
             {!loading && !error && paginatedProducts.length === 0 && (
-              <p>No products match your filters.</p>
+              <p>Aucun produit ne correspond à vos filtres.</p>
             )}
 
             {!loading && !error && filteredAndPricedProducts.length > productsPerPage && (

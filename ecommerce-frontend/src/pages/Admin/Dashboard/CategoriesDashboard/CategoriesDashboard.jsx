@@ -47,7 +47,7 @@ const CategoriesDashboard = () => {
       setState((prev) => ({
         ...prev,
         loading: false,
-        error: "Failed to load categories.",
+        error: "Échec du chargement des catégories.",
       }));
     }
   };
@@ -93,7 +93,7 @@ const CategoriesDashboard = () => {
           categories: prev.categories.map((c) =>
             c.id === state.selectedCategory.id ? response.data : c
           ),
-          success: "Category updated successfully!",
+          success: "Catégorie mise à jour avec succès !",
           error: null,
           formOpen: false,
         }));
@@ -102,7 +102,7 @@ const CategoriesDashboard = () => {
         setState((prev) => ({
           ...prev,
           categories: [...prev.categories, response.data],
-          success: "Category created successfully!",
+          success: "Catégorie créée avec succès !",
           error: null,
           formOpen: false,
         }));
@@ -110,7 +110,7 @@ const CategoriesDashboard = () => {
     } catch (err) {
       setState((prev) => ({
         ...prev,
-        error: "Failed to save category. Please try again.",
+        error: "Échec de l'enregistrement de la catégorie. Veuillez réessayer.",
         success: null,
       }));
     }
@@ -137,13 +137,13 @@ const CategoriesDashboard = () => {
         ),
         deleteDialogOpen: false,
         categoryToDelete: null,
-        success: "Category deleted successfully!",
+        success: "Catégorie supprimée avec succès !",
         error: null,
       }));
     } catch (err) {
       setState((prev) => ({
         ...prev,
-        error: "Failed to delete category. Please try again.",
+        error: "Échec de la suppression de la catégorie. Veuillez réessayer.",
         success: null,
       }));
     }
@@ -188,7 +188,7 @@ const CategoriesDashboard = () => {
           component="h1"
           sx={{ color: "var(--primary-color)" }}
         >
-          Categories Management
+          Gestion des catégories
         </Typography>
         <Button
           variant="contained"
@@ -205,7 +205,7 @@ const CategoriesDashboard = () => {
             boxShadow: "var(--box-shadow)",
           }}
         >
-          Add New Category
+          Ajouter une nouvelle catégorie
         </Button>
       </Box>
 
@@ -248,8 +248,8 @@ const CategoriesDashboard = () => {
 
       <ConfirmDialog
         open={state.deleteDialogOpen}
-        title="Confirm Delete"
-        content={`Are you sure you want to delete the category "${state.categoryToDelete?.name}"?`}
+        title="Confirmer la suppression"
+        content={`Êtes-vous sûr de vouloir supprimer la catégorie "${state.categoryToDelete?.name}" ?`}
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
       />

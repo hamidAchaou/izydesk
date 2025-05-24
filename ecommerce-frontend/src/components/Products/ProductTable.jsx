@@ -42,7 +42,7 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
     page * rowsPerPage + rowsPerPage
   );
 
-  // CSS variables for colors
+  // Variables CSS pour les couleurs
   const colors = {
     primary: "var(--primary-color)",
     secondary: "var(--secondary-color)",
@@ -57,15 +57,15 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
   return (
     <>
       <TableContainer component={Paper} sx={{ mt: 3 }}>
-        <Table aria-label="products table">
+        <Table aria-label="tableau des produits">
           <TableHead
             sx={{ bgcolor: colors.secondary, color: colors.background }}
           >
             <TableRow>
               <TableCell sx={{ color: colors.accent }}>Image</TableCell>
-              <TableCell sx={{ color: colors.accent }}>Name</TableCell>
-              <TableCell sx={{ color: colors.accent }}>Category</TableCell>
-              <TableCell sx={{ color: colors.accent }}>Price</TableCell>
+              <TableCell sx={{ color: colors.accent }}>Nom</TableCell>
+              <TableCell sx={{ color: colors.accent }}>Catégorie</TableCell>
+              <TableCell sx={{ color: colors.accent }}>Prix</TableCell>
               <TableCell sx={{ color: colors.accent }}>Stock</TableCell>
               <TableCell align="center" sx={{ color: colors.accent }}>
                 Actions
@@ -81,7 +81,7 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
                   align="center"
                   sx={{ color: colors.lightText }}
                 >
-                  No products found.
+                  Aucun produit trouvé.
                 </TableCell>
               </TableRow>
             ) : (
@@ -113,7 +113,7 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
                           color: colors.lightText,
                         }}
                       >
-                        No Image
+                        Pas d'image
                       </Box>
                     )}
                   </TableCell>
@@ -125,14 +125,14 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
                   </TableCell>
                   <TableCell sx={{ color: colors.primary }}>
                     {typeof product.price === "number"
-                      ? `$${product.price.toFixed(2)}`
+                      ? `${product.price.toFixed(2)} €`
                       : ""}
                   </TableCell>
                   <TableCell sx={{ color: colors.primary }}>
                     {product.stock}
                   </TableCell>
                   <TableCell align="center" sx={{ whiteSpace: "nowrap" }}>
-                    <Tooltip title="Edit">
+                    <Tooltip title="Modifier">
                       <IconButton
                         onClick={() => onEdit(product)}
                         sx={{ color: colors.primary }}
@@ -140,7 +140,7 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
                         <EditIcon />
                       </IconButton>
                     </Tooltip>
-                    <Tooltip title="Delete">
+                    <Tooltip title="Supprimer">
                       <IconButton
                         onClick={() => onDelete(product)}
                         sx={{ color: colors.primary }}
@@ -162,7 +162,7 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
                         },
                       }}
                     >
-                      Show More
+                      Voir plus
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -191,7 +191,7 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
         />
       </TableContainer>
 
-      {/* Details Modal */}
+      {/* Modal détails */}
       <Dialog
         open={Boolean(selectedProduct)}
         onClose={closeDetails}
@@ -206,7 +206,7 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
         }}
       >
         <DialogTitle sx={{ borderBottom: `1px solid ${colors.border}` }}>
-          Product Details
+          Détails du produit
         </DialogTitle>
 
         <DialogContent
@@ -215,7 +215,7 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
         >
           {selectedProduct && (
             <>
-              {/* Images Gallery */}
+              {/* Galerie d’images */}
               <Box
                 sx={{
                   flex: 1,
@@ -246,11 +246,11 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
                     />
                   ))
                 ) : (
-                  <Typography>No images available.</Typography>
+                  <Typography>Aucune image disponible.</Typography>
                 )}
               </Box>
 
-              {/* Details Info */}
+              {/* Infos détaillées */}
               <Box sx={{ flex: 1, minWidth: 320 }}>
                 <Typography
                   variant="h5"
@@ -260,20 +260,20 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
                   {selectedProduct.name}
                 </Typography>
                 <Typography variant="subtitle1" gutterBottom>
-                  <strong>Category:</strong>{" "}
+                  <strong>Catégorie :</strong>{" "}
                   {selectedProduct.category?.name || "N/A"}
                 </Typography>
                 <Typography variant="subtitle1" gutterBottom>
-                  <strong>Price:</strong> ${selectedProduct.price.toFixed(2)}
+                  <strong>Prix :</strong> {selectedProduct.price.toFixed(2)} €
                 </Typography>
                 <Typography variant="subtitle1" gutterBottom>
-                  <strong>Stock:</strong> {selectedProduct.stock}
+                  <strong>Stock :</strong> {selectedProduct.stock}
                 </Typography>
                 <Typography
                   variant="body1"
                   sx={{ mt: 2, color: colors.lightText }}
                 >
-                  {selectedProduct.description || "No description available."}
+                  {selectedProduct.description || "Pas de description disponible."}
                 </Typography>
               </Box>
             </>
@@ -293,7 +293,7 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
             }}
             variant="outlined"
           >
-            Close
+            Fermer
           </Button>
         </DialogActions>
       </Dialog>

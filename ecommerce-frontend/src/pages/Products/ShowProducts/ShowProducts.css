@@ -130,6 +130,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: var(--accent-color);
 }
 
 .total-price {
@@ -219,7 +220,7 @@ body {
 }
 
 .product-description {
-  color: var(--text-color);
+  color: var(--primary-color) !important;
   margin-bottom: 1.5rem;
 }
 

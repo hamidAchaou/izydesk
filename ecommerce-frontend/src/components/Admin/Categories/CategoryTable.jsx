@@ -35,11 +35,11 @@ const CategoryTable = ({ categories, onEdit, onDelete }) => {
 
   return (
     <TableContainer component={Paper} sx={{ mt: 3 }}>
-      <Table aria-label="categories table">
+      <Table aria-label="table des catégories">
         <TableHead sx={{ bgcolor: "var(--secondary-color)" }}>
           <TableRow>
             <TableCell sx={{ color: "var(--accent-color)" }}>ID</TableCell>
-            <TableCell sx={{ color: "var(--accent-color)" }}>Name</TableCell>
+            <TableCell sx={{ color: "var(--accent-color)" }}>Nom</TableCell>
             <TableCell align="center" sx={{ color: "var(--accent-color)" }}>
               Actions
             </TableCell>
@@ -54,7 +54,7 @@ const CategoryTable = ({ categories, onEdit, onDelete }) => {
                 align="center"
                 sx={{ color: "var(--primary-color)" }}
               >
-                No categories found.
+                Aucune catégorie trouvée.
               </TableCell>
             </TableRow>
           ) : (
@@ -67,7 +67,7 @@ const CategoryTable = ({ categories, onEdit, onDelete }) => {
                   {category.name}
                 </TableCell>
                 <TableCell align="center" sx={{ whiteSpace: "nowrap" }}>
-                  <Tooltip title="Edit">
+                  <Tooltip title="Modifier">
                     <IconButton
                       onClick={() => onEdit(category)}
                       sx={{ color: "var(--accent-color)" }}
@@ -75,7 +75,7 @@ const CategoryTable = ({ categories, onEdit, onDelete }) => {
                       <EditIcon />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title="Delete">
+                  <Tooltip title="Supprimer">
                     <IconButton
                       onClick={() => onDelete(category)}
                       sx={{ color: "var(--accent-color)" }}
@@ -91,36 +91,35 @@ const CategoryTable = ({ categories, onEdit, onDelete }) => {
       </Table>
 
       <TablePagination
-  rowsPerPageOptions={[5, 10, 25]}
-  component="div"
-  count={categories.length}
-  rowsPerPage={rowsPerPage}
-  page={page}
-  onPageChange={handleChangePage}
-  onRowsPerPageChange={handleChangeRowsPerPage}
-  sx={{
-    bgcolor: "var(--secondary-color)",
-    "& .MuiTablePagination-toolbar": {
-      color: "var(--accent-color)", // Label and numbers
-    },
-    "& .MuiTablePagination-selectLabel": {
-      color: "var(--accent-color)", // "Rows per page:"
-    },
-    "& .MuiTablePagination-displayedRows": {
-      color: "var(--accent-color)", // "1–5 of 5"
-    },
-    "& .MuiSelect-icon": {
-      color: "var(--accent-color)", // Dropdown arrow
-    },
-    "& .MuiInputBase-root": {
-      color: "var(--accent-color)", // Number inside dropdown
-    },
-    "& .MuiTablePagination-actions": {
-      color: "var(--accent-color)", // Pagination arrows
-    },
-  }}
-/>
-
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={categories.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        sx={{
+          bgcolor: "var(--secondary-color)",
+          "& .MuiTablePagination-toolbar": {
+            color: "var(--accent-color)", // Label et chiffres
+          },
+          "& .MuiTablePagination-selectLabel": {
+            color: "var(--accent-color)", // "Lignes par page :"
+          },
+          "& .MuiTablePagination-displayedRows": {
+            color: "var(--accent-color)", // "1–5 sur 5"
+          },
+          "& .MuiSelect-icon": {
+            color: "var(--accent-color)", // Flèche du dropdown
+          },
+          "& .MuiInputBase-root": {
+            color: "var(--accent-color)", // Nombre dans le dropdown
+          },
+          "& .MuiTablePagination-actions": {
+            color: "var(--accent-color)", // Flèches de pagination
+          },
+        }}
+      />
     </TableContainer>
   );
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import { Slider } from "@mui/material";
 import "./FilterCard.css";
+
 const FilterCard = ({
   categories,
   selectedCategoryId,
@@ -12,16 +13,16 @@ const FilterCard = ({
 }) => {
   return (
     <aside className="filter-container">
-      <h3 className="filter-title">Filter by</h3>
+      <h3 className="filter-title">Filtrer par</h3>
 
-      <label htmlFor="category">Category</label>
+      <label htmlFor="category">Catégorie</label>
       <select
         id="category"
         value={selectedCategoryId}
         onChange={(e) => onCategoryChange(e.target.value)}
         className="filter-select"
       >
-        <option value="">All Categories</option>
+        <option value="">Toutes les catégories</option>
         {categories.map((category) => (
           <option key={category.id} value={category.id}>
             {category.name}
@@ -29,7 +30,7 @@ const FilterCard = ({
         ))}
       </select>
 
-      <label>Price Range</label>
+      <label>Plage de prix</label>
       <Slider
         value={priceRange}
         min={sliderMin}
@@ -53,7 +54,7 @@ const FilterCard = ({
       />
 
       <div className="price-values">
-        <span>${priceRange[0]}</span> - <span>${priceRange[1]}</span>
+        <span>{priceRange[0]} €</span> - <span>{priceRange[1]} €</span>
       </div>
     </aside>
   );
