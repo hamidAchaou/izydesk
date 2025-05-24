@@ -22,8 +22,6 @@ export const ProductProvider = ({ children }) => {
             title: p.name,
             price: `$${p.price}`,
           }));
-          console.log(allProducts);
-
         setLatestProducts(latest);
       })
       .catch((err) => {

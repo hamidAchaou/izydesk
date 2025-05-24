@@ -9,13 +9,14 @@
     display: inline-block;
     padding: 10px 15px;
     background-color: var(--background-color);
-    color: var(--text-color);
+    color: var(--secondary-color) !important;
     border: 1px solid var(--background-color);
     border-radius: 5px !important;
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
   
+
   .hover-content li a:hover {
     background-color: var(--secondary-color) !important;
     color: var(--background-color) !important;

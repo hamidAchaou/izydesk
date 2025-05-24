@@ -6,7 +6,6 @@ import "./SlideItem.css";
 
 const SlideItem = ({ id, image, title, price }) => {
   const { addToCart } = useCart();
-  console.log(image);
 
   return (
     <div className="item">
@@ -22,7 +21,6 @@ const SlideItem = ({ id, image, title, price }) => {
               <button
                 type="button"
                 onClick={() => {
-                  console.log("Ajout au panier :", { id, title, price });
                   addToCart({ id, image, title, price });
                 }}
                 className="btnCart"

@@ -80,6 +80,15 @@ Email: admin@example.com
 Password: adminpassword
 ```
 
+## 🔐 User Access
+
+To access the user , login using the following credentials:
+
+```
+Email: user1@example.com
+Password: user1password
+```
+
 ---
 
 ## 📂 Project Structure

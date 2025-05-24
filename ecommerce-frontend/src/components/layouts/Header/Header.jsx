@@ -160,10 +160,10 @@ const Header = () => {
 
             {!user ? (
               <div className="auth-buttons">
-                <Link to="/login" className="auth-btn">
+                <Link to="/login" className="auth-btn login-btn">
                   Se connecter
                 </Link>
-                <Link to="/register" className="auth-btn">
+                <Link to="/register" className="auth-btn register-btn">
                   S'inscrire
                 </Link>
               </div>
