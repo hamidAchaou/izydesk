@@ -14,7 +14,7 @@
   
   .filter-container {
     background-color: var(--secondary-color);
-    color: var(--text-color);
+    color: var(--primary-color);
     padding: 1.5rem;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
@@ -38,8 +38,8 @@
     font-size: 1rem;
     border-radius: var(--border-radius);
     border: 1px solid var(--border-color);
-    background-color: var(--primary-color);
-    color: var(--text-color);
+    /* background-color: var(--primary-color); */
+    color: #000 !important;
     transition: border var(--transition-speed);
   }
   
@@ -50,12 +50,12 @@
   
   label {
     font-size: 0.9rem;
-    color: var(--light-text-color);
+    color: var(--primary-color);
   }
   
   .price-values {
     font-size: 0.9rem;
-    color: var(--text-color);
+    color: var(--primary-color);
     display: flex;
     justify-content: space-between;
   }

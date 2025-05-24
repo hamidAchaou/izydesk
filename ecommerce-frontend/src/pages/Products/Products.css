@@ -11,10 +11,9 @@
   --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   --transition-speed: 0.3s;
 }
-:root {
-  --primary-color: #2a2a2a;
-  --secondary-color: #1e1e1e;
-  --text-color: #ffffff;
+
+.section-title {
+color: var(--accent-color) !important;
 }
 
 .pagination {
@@ -28,6 +27,7 @@
 
 .page-item {
   margin: 0 5px;
+  color: var(--secondary-color) !important;
 }
 
 .btnCart {
