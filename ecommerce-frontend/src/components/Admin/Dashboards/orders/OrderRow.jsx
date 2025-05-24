@@ -53,12 +53,12 @@ const OrderRow = ({ order, onAction }) => {
           </IconButton>
         </TableCell>
         <TableCell>{order.id}</TableCell>
-        <TableCell>{new Date(order.date).toLocaleDateString("fr-FR")}</TableCell>
+        <TableCell>
+          {new Date(order.date).toLocaleDateString("fr-FR")}
+        </TableCell>
         <TableCell>
           <Chip
-            label={
-              order.status.charAt(0).toUpperCase() + order.status.slice(1)
-            } // première lettre en majuscule
+            label={order.status.charAt(0).toUpperCase() + order.status.slice(1)} // première lettre en majuscule
             icon={getStatusIcon(order.status)}
             variant="outlined"
             sx={{
@@ -70,83 +70,88 @@ const OrderRow = ({ order, onAction }) => {
           />
         </TableCell>
         <TableCell>
-          €
-          {typeof order.total === "number" ? order.total.toFixed(2) : "0,00"}
+          €{typeof order.total === "number" ? order.total.toFixed(2) : "0,00"}
         </TableCell>
         <TableCell>
-          {order.status.toLowerCase() === "pending" && (
-            <>
-              <Button
-                variant="contained"
-                size="small"
-                onClick={() => onAction(order, "shipped")}
-                sx={{
-                  mr: 1,
-                  backgroundColor: "var(--accent-color)",
-                  color: "#fff",
-                  "&:hover": {
-                    backgroundColor: "var(--accent-hover-color)",
-                  },
-                }}
-              >
-                Marquer comme Expédiée
-              </Button>
+          {(() => {
+            const status = order.status.toLowerCase();
 
-              <Button
-                variant="outlined"
-                color="error"
-                size="small"
-                onClick={() => onAction(order, "cancelled")}
-              >
-                Annuler la commande
-              </Button>
-            </>
-          )}
-          {order.status.toLowerCase() === "shipped" && (
-            <Button
-              variant="contained"
-              color="success"
-              size="small"
-              onClick={() => onAction(order, "delivered")}
-            >
-              Marquer comme Livrée
-            </Button>
-          )}
-          {order.status.toLowerCase() === "delivered" && (
-            <Button
-              variant="outlined"
-              size="small"
-              disabled
-              sx={{
-                backgroundColor: "var(--success-color, #4caf50)",
-                color: "#fff",
-                "&.Mui-disabled": {
-                  backgroundColor: "var(--success-color, #4caf50)",
-                  color: "#fff",
-                },
-              }}
-            >
-              Livrée
-            </Button>
-          )}
+            const actions = {
+              pending: (
+                <>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    onClick={() => onAction(order, "shipped")}
+                    sx={{
+                      mr: 1,
+                      backgroundColor: "var(--accent-color)",
+                      color: "#fff",
+                      "&:hover": {
+                        backgroundColor: "var(--accent-hover-color)",
+                      },
+                    }}
+                  >
+                    Expédiée
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    size="small"
+                    onClick={() => onAction(order, "cancelled")}
+                  >
+                    Annuler
+                  </Button>
+                </>
+              ),
+              shipped: (
+                <Button
+                  variant="contained"
+                  color="success"
+                  size="small"
+                  onClick={() => onAction(order, "delivered")}
+                >
+                  Livrée
+                </Button>
+              ),
+              delivered: (
+                <Button
+                  variant="outlined"
+                  size="small"
+                  disabled
+                  sx={{
+                    backgroundColor: "var(--success-color, #4caf50)",
+                    color: "#fff",
+                    "&.Mui-disabled": {
+                      backgroundColor: "var(--success-color, #4caf50)",
+                      color: "#fff",
+                    },
+                  }}
+                >
+                  Livrée
+                </Button>
+              ),
+              cancelled: (
+                <Button
+                  variant="outlined"
+                  size="small"
+                  disabled
+                  sx={{
+                    backgroundColor: "var(--error-color, #ff4d4f)",
+                    color: "#fff",
+                    "&.Mui-disabled": {
+                      backgroundColor: "var(--error-color, #ff4d4f)",
+                      color: "#fff",
+                    },
+                  }}
+                >
+                  Annulée
+                </Button>
+              ),
+            };
 
-          {order.status.toLowerCase() === "cancelled" && (
-            <Button
-              variant="outlined"
-              size="small"
-              disabled
-              sx={{
-                backgroundColor: "#ff4d4f",
-                color: "#fff",
-                "&.Mui-disabled": {
-                  backgroundColor: "#ff4d4f",
-                  color: "#fff",
-                },
-              }}
-            >
-              Annulée
-            </Button>
-          )}
+            return actions[status] || null;
+          })()}
         </TableCell>
       </TableRow>
 

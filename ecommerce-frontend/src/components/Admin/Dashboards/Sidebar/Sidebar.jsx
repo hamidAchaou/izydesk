@@ -24,7 +24,7 @@ const Sidebar = () => {
             className={({ isActive }) => isActive ? "sidebar-link active" : "sidebar-link"}
           >
             <FaBoxOpen className="sidebar-icon" />
-            <span>Gérer les catégories</span>
+            <span>catégories</span>
           </NavLink>
         </li>
         <li>

@@ -116,15 +116,22 @@ const Header = () => {
                       <div className="cart-items-container">
                         {cartItems.map((item) => (
                           <div key={item.id} className="cart-card">
-                            <img src={item.image} alt={item.name} />
-                            <div>
-                              <div>{item.name}</div>
-                              <div>Qté: {item.quantity}</div>
-                              <div>
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="cart-image"
+                            />
+                            <div className="cart-details">
+                              <div className="cart-title">{item.name}</div>
+                              <div className="cart-meta">
+                                Qté: {item.quantity}
+                              </div>
+                              <div className="cart-meta">
                                 €{(item.price * item.quantity).toFixed(2)}
                               </div>
                             </div>
                             <button
+                              className="cart-delete-btn"
                               aria-label={`Supprimer ${item.name} du panier`}
                               onClick={() => removeFromCart(item.id)}
                             >
@@ -134,8 +141,14 @@ const Header = () => {
                         ))}
                       </div>
                       <div className="cart-footer">
-                        <strong>Total:</strong> €{totalPrice.toFixed(2)}
-                        <Link to="/cart" onClick={() => setCartOpen(false)}>
+                        <span className="cart-total">
+                          <strong>Total:</strong> €{totalPrice.toFixed(2)}
+                        </span>
+                        <Link
+                          to="/cart"
+                          className="go-to-cart-btn"
+                          onClick={() => setCartOpen(false)}
+                        >
                           Aller au panier
                         </Link>
                       </div>
