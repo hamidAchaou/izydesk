@@ -1,3 +1,4 @@
+// components/SlideItem.jsx
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaEye, FaShoppingCart } from "react-icons/fa";
@@ -6,6 +7,10 @@ import "./SlideItem.css";
 
 const SlideItem = ({ id, image, title, price }) => {
   const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    addToCart({ id, image, title, price });
+  };
 
   return (
     <div className="item">
@@ -20,9 +25,7 @@ const SlideItem = ({ id, image, title, price }) => {
             <li>
               <button
                 type="button"
-                onClick={() => {
-                  addToCart({ id, image, title, price });
-                }}
+                onClick={handleAddToCart}
                 className="btnCart"
                 title="Ajouter au panier"
                 aria-label={`Ajouter ${title} au panier`}

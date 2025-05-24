@@ -2,6 +2,8 @@ import React from "react";
 import "./CartItem.css";
 
 const CartItem = ({ item, onRemove, onChangeQuantity }) => {
+  console.log(item);
+
   return (
     <div className="cart-item-container">
       <button
@@ -14,7 +16,7 @@ const CartItem = ({ item, onRemove, onChangeQuantity }) => {
 
       <div className="cart-item">
         <div className="cart-item-img">
-          <img src={item.img} alt={item.name} />
+          <img src={item.image} alt={item.name} />
         </div>
 
         <div className="cart-item-info">

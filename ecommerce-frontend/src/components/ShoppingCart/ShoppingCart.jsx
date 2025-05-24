@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import CartItem from "./CartItem";
 import "./ShoppingCart.css";
 import { loadStripe } from "@stripe/stripe-js";
-import apiClient from "../../api/index";
+import apiClient from "../../api";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -27,11 +27,11 @@ const ShoppingCart = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const removeCartItem = (itemId) => {
+  const removeCartItem = useCallback((itemId) => {
     setCartItems((items) => items.filter((item) => item.id !== itemId));
-  };
+  }, []);
 
-  const updateQuantity = (itemId, change) => {
+  const updateQuantity = useCallback((itemId, change) => {
     setCartItems((items) =>
       items.map((item) =>
         item.id === itemId
@@ -39,39 +39,41 @@ const ShoppingCart = () => {
           : item
       )
     );
-  };
+  }, []);
 
-  const handleCheckout = async () => {
+  const handleCheckout = useCallback(async () => {
     if (!user) {
-      return navigate("/login");
+      navigate("/login");
+      return;
     }
 
     try {
       const stripe = await stripePromise;
+
       const response = await apiClient.post("/create-checkout-session", {
         items: cartItems,
       });
 
-      const { error } = await stripe.redirectToCheckout({
+      const result = await stripe.redirectToCheckout({
         sessionId: response.data.id,
       });
 
-      if (error) {
-        console.error("Erreur de redirection Stripe :", error.message);
+      if (result.error) {
+        console.error("Erreur de redirection Stripe :", result.error.message);
         alert("Impossible de rediriger vers le paiement.");
       }
     } catch (error) {
       console.error("Erreur lors du paiement :", error);
       alert("Une erreur est survenue pendant le paiement.");
     }
-  };
+  }, [user, cartItems, navigate]);
 
   const totalAmount = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
 
-  const formattedTotal = (totalAmount + 5).toFixed(2); // +5 pour les frais de livraison
+  const formattedTotal = (totalAmount + 5).toFixed(2); // Assuming +5 is for shipping or tax
 
   return (
     <main className="cart">
@@ -90,7 +92,7 @@ const ShoppingCart = () => {
             </div>
 
             {cartItems.length === 0 ? (
-              <p>Votre panier est vide.</p>
+              <p className="empty-cart-message">Votre panier est vide.</p>
             ) : (
               cartItems.map((item) => (
                 <CartItem
@@ -115,7 +117,7 @@ const ShoppingCart = () => {
             </div>
 
             {cartItems.length > 0 && (
-              <button className="btn" onClick={handleCheckout}>
+              <button className="btn btn-checkout" onClick={handleCheckout}>
                 PAYER
               </button>
             )}
