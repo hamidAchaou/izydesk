@@ -5,20 +5,15 @@ import { loadStripe } from "@stripe/stripe-js";
 import apiClient from "../../api";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
 
 const STORAGE_KEY = "cartItems";
-const stripePromise = loadStripe("pk_test_51RRCokFbpJE8hmHI0iU8O7PyUoGsMNyJvhBK3JkKAqljrHQ8v4tOeUtZOL68ZV0wUTXu87RdWZCEpaijH0TnTiJ100UPZa22nS");
+const stripePromise = loadStripe(
+  "pk_test_51RRCokFbpJE8hmHI0iU8O7PyUoGsMNyJvhBK3JkKAqljrHQ8v4tOeUtZOL68ZV0wUTXu87RdWZCEpaijH0TnTiJ100UPZa22nS"
+);
 
 const ShoppingCart = () => {
-  const [cartItems, setCartItems] = useState(() => {
-    try {
-      const savedItems = localStorage.getItem(STORAGE_KEY);
-      return savedItems ? JSON.parse(savedItems) : [];
-    } catch (error) {
-      console.error("Échec de l'analyse des articles du panier depuis localStorage", error);
-      return [];
-    }
-  });
+  const { cartItems, removeFromCart, updateItemQuantity } = useCart();
 
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -26,20 +21,6 @@ const ShoppingCart = () => {
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(cartItems));
   }, [cartItems]);
-
-  const removeCartItem = useCallback((itemId) => {
-    setCartItems((items) => items.filter((item) => item.id !== itemId));
-  }, []);
-
-  const updateQuantity = useCallback((itemId, change) => {
-    setCartItems((items) =>
-      items.map((item) =>
-        item.id === itemId
-          ? { ...item, quantity: Math.max(1, item.quantity + change) }
-          : item
-      )
-    );
-  }, []);
 
   const handleCheckout = useCallback(async () => {
     if (!user) {
@@ -83,10 +64,13 @@ const ShoppingCart = () => {
             <div className="title">
               <div className="row">
                 <div className="col">
-                  <h4><b>Panier</b></h4>
+                  <h4>
+                    <b>Panier</b>
+                  </h4>
                 </div>
                 <div className="col align-self-center text-right text-muted">
-                  {cartItems.length} {cartItems.length === 1 ? "article" : "articles"}
+                  {cartItems.length}{" "}
+                  {cartItems.length === 1 ? "article" : "articles"}
                 </div>
               </div>
             </div>
@@ -98,8 +82,8 @@ const ShoppingCart = () => {
                 <CartItem
                   key={item.id}
                   item={item}
-                  onRemove={removeCartItem}
-                  onChangeQuantity={updateQuantity}
+                  onRemove={removeFromCart}
+                  onChangeQuantity={updateItemQuantity}
                 />
               ))
             )}

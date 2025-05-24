@@ -1,8 +1,6 @@
 import React from "react";
 import "./CartItem.css";
-
 const CartItem = ({ item, onRemove, onChangeQuantity }) => {
-  console.log(item);
 
   return (
     <div className="cart-item-container">
