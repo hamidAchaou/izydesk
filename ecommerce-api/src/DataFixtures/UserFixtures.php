@@ -20,7 +20,7 @@ class UserFixtures extends Fixture
     {
         // Create Admin user
         $admin = new User();
-        $admin->setEmail('admin@example.com');
+        $admin->setEmail('admin@gmail.com');
         $admin->setFirstName('Admin');
         $admin->setLastName('User');
         $admin->setPhone('1234567890');
@@ -30,7 +30,7 @@ class UserFixtures extends Fixture
 
         // Create User 1
         $user1 = new User();
-        $user1->setEmail('user1@example.com');
+        $user1->setEmail('user1@gmail.com');
         $user1->setFirstName('User');
         $user1->setLastName('One');
         $user1->setPhone('0987654321');
@@ -40,7 +40,7 @@ class UserFixtures extends Fixture
 
         // Create User 2
         $user2 = new User();
-        $user2->setEmail('user2@example.com');
+        $user2->setEmail('user2@gmail.com');
         $user2->setFirstName('User');
         $user2->setLastName('Two');
         $user2->setPhone('1122334455');

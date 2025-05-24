@@ -4,55 +4,74 @@ namespace App\DataFixtures;
 
 use App\Entity\Product;
 use App\Entity\ProductImage;
+use App\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
+use Symfony\Component\Finder\Finder;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use App\Entity\Category;
 
 class ProductFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        $faker = Factory::create();
-    
-        // Base Picsum URLs (640x480 size) with different image IDs for variety
-        $picsumImageIds = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
-    
-        for ($i = 0; $i < 20; $i++) {
+        $uploadDir = __DIR__ . '/../../public/uploads';
+        $finder = new Finder();
+        $finder->files()->in($uploadDir)->name('*.jpg');
+
+        $groupedImages = [];
+
+        foreach ($finder as $file) {
+            $filename = $file->getFilename();
+            $nameWithoutExt = pathinfo($filename, PATHINFO_FILENAME);
+
+            // Remove trailing numbers (e.g., Abaya-women-1 → Abaya-women)
+            $baseName = preg_replace('/[-_\s]*\d+$/', '', $nameWithoutExt);
+
+            $groupedImages[$baseName][] = 'http://localhost:8000/uploads/' . $filename;
+        }
+
+        foreach ($groupedImages as $baseName => $images) {
+            if (count($images) < 1) continue;
+
             $product = new Product();
-            $product->setName($faker->words(3, true));
-            $product->setDescription($faker->paragraph);
-            $product->setPrice($faker->randomFloat(2, 10, 200));
-            $product->setStock(mt_rand(1, 100));
-    
+            $product->setName(ucwords(str_replace(['-', '_'], ' ', $baseName)));
+            $product->setDescription("Produit pour " . $baseName);
+            $product->setPrice(mt_rand(10, 100));
+            $product->setStock(mt_rand(5, 30));
+
+            // Determine category based on baseName
+            $categoryIndex = $this->matchCategory($baseName);
+            // $product->setCategory($this->getReference('category_' . $categoryIndex));
             $product->setCategory($this->getReference('category_' . rand(0, 3), Category::class));
-    
-            $imageCount = rand(1, 3);
+
+
             $mainImage = null;
-    
-            for ($j = 0; $j < $imageCount; $j++) {
+            foreach ($images as $i => $imgPath) {
                 $productImage = new ProductImage();
-    
-                // Pick a random Picsum ID and create the image URL
-                $randomId = $picsumImageIds[array_rand($picsumImageIds)];
-                $imageUrl = "https://picsum.photos/id/{$randomId}/640/480";
-    
-                $productImage->setImage($imageUrl);
-    
+                $productImage->setImage($imgPath);
                 $productImage->setProduct($product);
                 $manager->persist($productImage);
-    
-                if ($j === 0) {
-                    $mainImage = $productImage;
-                }
+
+                if ($i === 0) $mainImage = $productImage;
             }
-    
+
             $product->setImage($mainImage);
             $manager->persist($product);
         }
-    
+
         $manager->flush();
+    }
+
+    private function matchCategory(string $baseName): int
+    {
+        $lower = strtolower($baseName);
+
+        if (str_contains($lower, 'femme') || str_contains($lower, 'woman')) return 0;
+        if (str_contains($lower, 'homme') || str_contains($lower, 'man')) return 1;
+        if (str_contains($lower, 'enfant') || str_contains($lower, 'kid')) return 2;
+
+        // Default to "Accessoires" (index 3)
+        return 3;
     }
 
     public function getDependencies(): array

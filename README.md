@@ -1,19 +1,3 @@
-# EIZYdesk
-
-EIZYdesk is a full-stack e-commerce dashboard built with Symfony 7 (backend) and React.js (frontend). This project provides both client and admin interfaces to manage products, orders, users, and more.
-
----
-
-## 🚀 Features
-
-- 🛒 Product Management  
-- 👥 User & Role Management  
-- 📊 Dashboard with analytics  
-- 🧾 Orders & Inventory  
-- 🔐 Admin Authentication  
-- ⚙️ Symfony + React Integration
-
----
 
 ## 🛠️ Installation Guide
 
@@ -60,6 +44,7 @@ JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
 JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
 JWT_PASSPHRASE=51ac1e610b43232b3eb363e62cd12538a7fed682eb5797ecd12f8e9a97f13e3e
 ```
+
 ### 5. Start the Symfony Development Server
 
 ```bash
@@ -103,15 +88,3 @@ Password: adminpassword
 ecommerce-api/         # Symfony backend
 ecommerce-frontend/    # React frontend
 ```
-
----
-
-## 📢 Contributing
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
----
-
-## 📄 License
-
-This project is open-source and available under the [MIT License](LICENSE).

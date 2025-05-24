@@ -9,7 +9,7 @@ use Faker\Factory;
 
 class CategoryFixtures extends Fixture
 {
-    public const CATEGORIES = ['Électronique', 'Maison', 'Vêtements', 'Sports'];
+    public const CATEGORIES = ['Femme', 'Homme', 'Enfants', 'Accessoires'];
 
     public function load(ObjectManager $manager): void
     {
