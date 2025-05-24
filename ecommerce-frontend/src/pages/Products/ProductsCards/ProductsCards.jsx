@@ -16,7 +16,10 @@ const ProductsCards = ({ products }) => {
               <div className="hover-content">
                 <ul>
                   <li>
-                    <Link to={`single-product/${id}`} aria-label={`Voir les détails de ${name}`}>
+                    <Link
+                      to={`single-product/${id}`}
+                      aria-label={`Voir les détails de ${name}`}
+                    >
                       <FaEye />
                     </Link>
                   </li>
@@ -24,12 +27,12 @@ const ProductsCards = ({ products }) => {
                     <button
                       type="button"
                       onClick={() => {
-                        addToCart({ 
-                          id, 
-                          image: images[0] || '', 
-                          name, 
-                          price, 
-                          quantity: 1 
+                        addToCart({
+                          id,
+                          image: images[0] || "",
+                          name,
+                          price,
+                          quantity: 1,
                         });
                       }}
                       className="btnCart"
@@ -43,11 +46,13 @@ const ProductsCards = ({ products }) => {
               </div>
               {/* Affiche la première image si disponible, sinon une image par défaut */}
               {images && images.length > 0 ? (
-                <img 
-                  src={images[0]} 
-                  alt={name} 
+                <img
+                  src={images[0]}
+                  alt={name}
+                  loading="lazy"
+                  className="product-image"
                   onError={(e) => {
-                    e.target.src = '/path/to/default-image.jpg';
+                    e.target.src = "/path/to/default-image.jpg";
                   }}
                 />
               ) : (
@@ -76,7 +81,7 @@ ProductsCards.propTypes = {
       images: PropTypes.arrayOf(PropTypes.string),
       category: PropTypes.shape({
         id: PropTypes.number,
-        name: PropTypes.string
+        name: PropTypes.string,
       }),
       rating: PropTypes.number,
     })

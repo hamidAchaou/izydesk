@@ -54,12 +54,6 @@ class Order
         $this->total = $total;
     }
 
-    #[ORM\PreUpdate]
-    public function onPreUpdate(): void
-    {
-        $this->updatedAt = new \DateTime();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -113,12 +107,19 @@ class Order
     {
         return $this->updatedAt;
     }
-
+    
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
         return $this;
     }
+
+    #[ORM\PreUpdate]
+    public function onPreUpdate(): void
+    {
+        $this->updatedAt = new \DateTime();
+    }
+
 
     /**
      * @return Collection<int, OrderItem>

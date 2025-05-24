@@ -12,6 +12,8 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class ProductFixtures extends Fixture implements DependentFixtureInterface
 {
+    public const CATEGORIES = ['Femme', 'Homme', 'Enfants', 'Accessoires'];
+
     public function load(ObjectManager $manager): void
     {
         $uploadDir = __DIR__ . '/../../public/uploads';
@@ -24,26 +26,32 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
             $filename = $file->getFilename();
             $nameWithoutExt = pathinfo($filename, PATHINFO_FILENAME);
 
-            // Remove trailing numbers (e.g., Abaya-women-1 → Abaya-women)
+            // Remove trailing numbers (e.g., "-1", "-2" etc.)
             $baseName = preg_replace('/[-_\s]*\d+$/', '', $nameWithoutExt);
 
             $groupedImages[$baseName][] = 'http://localhost:8000/uploads/' . $filename;
         }
 
         foreach ($groupedImages as $baseName => $images) {
-            if (count($images) < 1) continue;
+            if (count($images) < 1) {
+                continue;
+            }
+
+            // Extract product name and category from baseName
+            [$productName, $categoryName] = $this->extractProductNameAndCategory($baseName);
 
             $product = new Product();
-            $product->setName(ucwords(str_replace(['-', '_'], ' ', $baseName)));
-            $product->setDescription("Produit pour " . $baseName);
+            $product->setName(ucwords($productName));
+            $product->setDescription("Produit pour " . $productName);
             $product->setPrice(mt_rand(10, 100));
             $product->setStock(mt_rand(5, 30));
 
-            // Determine category based on baseName
-            $categoryIndex = $this->matchCategory($baseName);
-            // $product->setCategory($this->getReference('category_' . $categoryIndex));
+            // Get category reference index by category name
+            $categoryIndex = array_search($categoryName, self::CATEGORIES, true);
+            if ($categoryIndex === false) {
+                $categoryIndex = 3; // Default to Accessoires index
+            }
             $product->setCategory($this->getReference('category_' . rand(0, 3), Category::class));
-
 
             $mainImage = null;
             foreach ($images as $i => $imgPath) {
@@ -52,7 +60,9 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
                 $productImage->setProduct($product);
                 $manager->persist($productImage);
 
-                if ($i === 0) $mainImage = $productImage;
+                if ($i === 0) {
+                    $mainImage = $productImage;
+                }
             }
 
             $product->setImage($mainImage);
@@ -62,16 +72,34 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
-    private function matchCategory(string $baseName): int
+    private function extractProductNameAndCategory(string $baseName): array
     {
-        $lower = strtolower($baseName);
+        // Split by first dash with optional spaces
+        $parts = preg_split('/\s*-\s*/', $baseName, 3);
 
-        if (str_contains($lower, 'femme') || str_contains($lower, 'woman')) return 0;
-        if (str_contains($lower, 'homme') || str_contains($lower, 'man')) return 1;
-        if (str_contains($lower, 'enfant') || str_contains($lower, 'kid')) return 2;
+        // Fallback if dash not found
+        if (count($parts) < 2) {
+            return [trim($baseName), 'Accessoires']; // default category
+        }
 
-        // Default to "Accessoires" (index 3)
-        return 3;
+        $productName = trim($parts[0]);
+        $category = trim($parts[1]);
+
+        // Normalize category to match allowed categories
+        $validCategories = ['Femme', 'Homme', 'Enfants', 'Accessoires'];
+        foreach ($validCategories as $validCat) {
+            if (strcasecmp($category, $validCat) === 0) {
+                $category = $validCat;
+                break;
+            }
+        }
+
+        // If category is invalid, default to Accessoires
+        if (!in_array($category, $validCategories, true)) {
+            $category = 'Accessoires';
+        }
+
+        return [$productName, $category];
     }
 
     public function getDependencies(): array

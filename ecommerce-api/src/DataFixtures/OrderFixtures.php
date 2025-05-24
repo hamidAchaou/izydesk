@@ -30,7 +30,7 @@ class OrderFixtures extends Fixture implements DependentFixtureInterface
             $order->setUser($faker->randomElement($users));
             $order->setStatus($faker->randomElement(['pending', 'processing', 'shipped', 'cancelled']));
             $order->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-2 months', 'now')));
-            // Removed $order->setUpdatedAt()
+            // Removed $order->setUpdatedAt();
 
             $orderItems = $faker->randomElements($products, rand(1, 5));
             $total = 0;

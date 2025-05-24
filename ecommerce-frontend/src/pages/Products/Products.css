@@ -41,6 +41,13 @@ color: var(--accent-color) !important;
   transition: background-color 0.3s ease;
 }
 
+.product-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: block;
+}
+
 .btnCart:hover {
   background-color: var(--secondary-color);
   color: var(--background-color);
