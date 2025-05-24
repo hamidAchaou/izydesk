@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[ORM\Table(name: '`order`')]
+#[ORM\Table(name: '`orders`')]
 class Order
 {
     #[ORM\Id]
