@@ -52,9 +52,11 @@ final class OrderController extends AbstractController
     {
         try {
             $orderDto = $this->orderService->getById($id);
-            return $orderDto
-                ? $this->json($orderDto, Response::HTTP_OK, [], ['groups' => 'order:read'])
-                : $this->json(['error' => 'Order not found'], Response::HTTP_NOT_FOUND);
+            if (!$orderDto) {
+                return $this->json(['error' => 'Order not found'], Response::HTTP_NOT_FOUND);
+            }
+
+            return $this->json($orderDto, Response::HTTP_OK, [], ['groups' => 'order:read']);
         } catch (\Throwable $e) {
             return $this->json(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -67,9 +69,11 @@ final class OrderController extends AbstractController
             $data = json_decode($request->getContent(), true);
             $orderDto = $this->orderService->update($id, $data);
 
-            return $orderDto
-                ? $this->json($orderDto, Response::HTTP_OK, [], ['groups' => 'order:read'])
-                : $this->json(['error' => 'Order not found'], Response::HTTP_NOT_FOUND);
+            if (!$orderDto) {
+                return $this->json(['error' => 'Order not found'], Response::HTTP_NOT_FOUND);
+            }
+
+            return $this->json($orderDto, Response::HTTP_OK, [], ['groups' => 'order:read']);
         } catch (\Throwable $e) {
             return $this->json(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -80,66 +84,46 @@ final class OrderController extends AbstractController
     {
         try {
             $success = $this->orderService->delete($id);
-            return $success
-                ? new JsonResponse(null, Response::HTTP_NO_CONTENT)
-                : $this->json(['error' => 'Order not found'], Response::HTTP_NOT_FOUND);
+
+            if (!$success) {
+                return $this->json(['error' => 'Order not found'], Response::HTTP_NOT_FOUND);
+            }
+
+            return new JsonResponse(null, Response::HTTP_NO_CONTENT);
         } catch (\Throwable $e) {
             return $this->json(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
 
     #[Route('/confirm', name: 'order_confirm', methods: ['POST'])]
-    public function confirmOrder(Request $request): JsonResponse
+    public function confirm(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
-        $sessionId = $data['sessionId'] ?? null;
-
-        if (!$sessionId) {
-            return $this->json(['error' => 'Missing session ID'], Response::HTTP_BAD_REQUEST);
-        }
-
-        Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
-
         try {
-            $session = Session::retrieve($sessionId, ['expand' => ['line_items', 'customer']]);
-
-            if ($session->payment_status !== 'paid') {
-                return $this->json(['error' => 'Payment not completed'], Response::HTTP_BAD_REQUEST);
+            $data = json_decode($request->getContent(), true);
+            $sessionId = $data['sessionId'] ?? null;
+    
+            if (!$sessionId) {
+                return $this->json(['error' => 'Session ID is required'], Response::HTTP_BAD_REQUEST);
             }
-
-            $orderRepo = $this->em->getRepository(Order::class);
-            $existingOrder = $orderRepo->findOneBy(['stripeSessionId' => $sessionId]);
-            if ($existingOrder) {
-                return $this->json(['success' => true, 'message' => 'Order already saved']);
-            }
-
-            $order = new Order();
-            if ($user = $this->getUser()) {
-                $order->setUser($user);
-            }
-
-            $order->setStatus('paid');
-            $order->setStripeSessionId($sessionId);
-
-            foreach ($session->line_items->data as $item) {
-                $product = $this->productRepo->findOneBy(['name' => $item->description]);
-                if (!$product) {
-                    continue;
-                }
-
-                $orderItem = new OrderItem();
-                $orderItem->setProduct($product);
-                $orderItem->setQuantity($item->quantity);
-                $orderItem->setPrice($item->amount_total / 100); // cents to EUR
-                $order->addItem($orderItem);
-            }
-
-            $this->em->persist($order);
-            $this->em->flush();
-
-            return $this->json(['success' => true, 'orderId' => $order->getId()]);
+    
+            Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
+            $session = Session::retrieve($sessionId);
+    
+            // Appel à un service qui enregistre l'ordre en base
+            $this->orderService->saveOrder($session);
+    
+            return $this->json([
+                'success' => true,
+                'message' => 'Order saved successfully',
+            ], Response::HTTP_OK);
+    
         } catch (\Throwable $e) {
-            return $this->json(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->json([
+                'success' => false,
+                'error' => $e->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+    
 }

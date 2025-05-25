@@ -38,13 +38,14 @@ class StripeCheckoutController extends AbstractController
                 'payment_method_types' => ['card'],
                 'line_items' => $lineItems,
                 'mode' => 'payment',
-                'success_url' => 'http://localhost:5173/success',
+                // Modifie cette ligne pour inclure le session_id dans l’URL de succès
+                'success_url' => 'http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => 'http://localhost:5173/cancel',
                 'metadata' => [
                     'user_id' => $this->getUser()->getUserIdentifier(),
                     'items' => json_encode($data['items']),
                 ],
-            ]);            
+            ]);
 
             return new JsonResponse(['id' => $session->id]);
         } catch (\Exception $e) {

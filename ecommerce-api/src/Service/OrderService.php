@@ -8,6 +8,10 @@ use App\DTO\OrderDTO;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use \Stripe\Checkout\Session;
+use App\Repository\UserRepository;
+use App\Repository\ProductRepository;
+use App\Entity\OrderItem;
 
 class OrderService
 {
@@ -15,7 +19,9 @@ class OrderService
         private readonly OrderRepository $orderRepository,
         private readonly EntityManagerInterface $em,
         private readonly SerializerInterface $serializer,
-        private readonly ValidatorInterface $validator
+        private readonly ValidatorInterface $validator,
+        private readonly UserRepository $userRepository,
+        private readonly ProductRepository $productRepo
     ) {}
 
     /**
@@ -97,5 +103,73 @@ class OrderService
         $this->em->remove($order);
         $this->em->flush();
         return true;
+    }
+
+    public function saveOrder(\Stripe\Checkout\Session $session): void
+    {
+        $order = new Order();
+        $order->setStripeSessionId($session->id);
+    
+        // Optionnel : retrouver l'utilisateur par e-mail
+        $customerEmail = $session->customer_details->email ?? null;
+        if ($customerEmail) {
+            $user = $this->userRepository->findOneByEmail($customerEmail);
+            if ($user) {
+                $order->setUser($user);
+            }
+        }
+    
+        $this->em->persist($order);
+        $this->em->flush();
+    }
+    
+
+    public function confirm(Session $session): Order
+    {
+        $customerEmail = $session->customer_details->email ?? null;
+        if (!$customerEmail) {
+            throw new \InvalidArgumentException('Customer email not found in session.');
+        }
+
+        $user = $this->userRepository->findOneByEmail($customerEmail);
+        if (!$user) {
+            throw new \RuntimeException("User with email {$customerEmail} not found.");
+        }
+
+        $lineItems = \Stripe\Checkout\Session::allLineItems($session->id, ['limit' => 100]);
+
+        $order = new Order();
+        $order->setUser($user);
+        $order->setTotal($session->amount_total / 100);
+        $order->setCreatedAt(new \DateTimeImmutable());
+
+        $this->em->beginTransaction();
+        try {
+            $this->em->persist($order);
+
+            foreach ($lineItems->data as $lineItem) {
+                // Use 'name' instead of 'title' for Product lookup
+                $product = $this->productRepo->findOneBy(['name' => $lineItem->description]);
+                if (!$product) {
+                    throw new \RuntimeException("Product '{$lineItem->description}' not found.");
+                }
+
+                $item = new OrderItem();
+                $item->setProduct($product);
+                $item->setQuantity($lineItem->quantity);
+                $item->setPrice($lineItem->amount_total / 100);
+                $item->setOrder($order);
+
+                $this->em->persist($item);
+            }
+
+            $this->em->flush();
+            $this->em->commit();
+        } catch (\Exception $e) {
+            $this->em->rollback();
+            throw $e;
+        }
+
+        return $order;
     }
 }
