@@ -40,7 +40,24 @@ const Success = () => {
     0
   );
   const total = subtotal + shippingFee;
-
+  const urlParams = new URLSearchParams(window.location.search);
+  const sessionId = urlParams.get('session_id');
+  
+  // Send sessionId to your backend API
+  fetch('http://localhost:8000/api/order/confirm', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ sessionId }),
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.success) {
+      console.log('Order saved successfully');
+    } else {
+      console.error('Failed to save order', data.error);
+    }
+  });
+  
   return (
     <Box maxWidth="md" mx="auto" p={4}>
       <Paper elevation={3} sx={{ p: 4, borderRadius: 3 }}>

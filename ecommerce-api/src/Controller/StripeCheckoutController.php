@@ -40,7 +40,11 @@ class StripeCheckoutController extends AbstractController
                 'mode' => 'payment',
                 'success_url' => 'http://localhost:5173/success',
                 'cancel_url' => 'http://localhost:5173/cancel',
-            ]);
+                'metadata' => [
+                    'user_id' => $this->getUser()->getUserIdentifier(),
+                    'items' => json_encode($data['items']),
+                ],
+            ]);            
 
             return new JsonResponse(['id' => $session->id]);
         } catch (\Exception $e) {

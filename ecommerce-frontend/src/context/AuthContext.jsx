@@ -16,12 +16,13 @@ export const AuthProvider = ({ children }) => {
       const fullUser = {
         token: userData.token,
         username: decoded.username || "",
-        firstName: decoded.firstName || "", // optional: if available in token
+        firstName: decoded.firstName || "",
         roles: decoded.roles || [],
       };
 
       setUser(fullUser);
       localStorage.setItem("user", JSON.stringify(fullUser));
+      localStorage.setItem("token", userData.token);
     } catch (error) {
       console.error("Invalid token", error);
     }
@@ -30,6 +31,7 @@ export const AuthProvider = ({ children }) => {
   const logoutUser = () => {
     setUser(null);
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
   };
 
   const isAuthenticated = !!user;

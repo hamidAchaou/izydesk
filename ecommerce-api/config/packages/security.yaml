@@ -39,6 +39,7 @@ security:
     - { path: ^/api/categories, roles: PUBLIC_ACCESS }
     - { path: ^/api/user, roles: ROLE_USER }
     - { path: ^/api/admin, roles: ROLE_ADMIN }
+    - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
 
 # Environment specific overrides (optional)
 when@test:

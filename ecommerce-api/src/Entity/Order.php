@@ -37,6 +37,9 @@ class Order
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $stripeSessionId = null;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -53,6 +56,18 @@ class Order
         }
         $this->total = $total;
     }
+
+    public function getStripeSessionId(): ?string
+    {
+        return $this->stripeSessionId;
+    }
+
+    public function setStripeSessionId(?string $stripeSessionId): self
+    {
+        $this->stripeSessionId = $stripeSessionId;
+        return $this;
+    }
+
 
     public function getId(): ?int
     {
@@ -107,7 +122,7 @@ class Order
     {
         return $this->updatedAt;
     }
-    
+
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
