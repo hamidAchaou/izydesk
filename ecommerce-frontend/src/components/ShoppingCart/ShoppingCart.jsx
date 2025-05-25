@@ -8,9 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 
 const STORAGE_KEY = "cartItems";
-const stripePromise = loadStripe(
-  "pk_test_51RRCokFbpJE8hmHI0iU8O7PyUoGsMNyJvhBK3JkKAqljrHQ8v4tOeUtZOL68ZV0wUTXu87RdWZCEpaijH0TnTiJ100UPZa22nS"
-);
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const ShoppingCart = () => {
   const { cartItems, removeFromCart, updateItemQuantity } = useCart();

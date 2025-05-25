@@ -10,14 +10,9 @@ import "./assets/css/templatemo-hexashop.css";
 import "./assets/css/lightbox.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import Success from "./pages/Success/Success";
 
-import {
-  Home,
-  About,
-  Contact,
-  Products,
-  ShowProducts,
-} from "./pages";
+import { Home, About, Contact, Products, ShowProducts } from "./pages";
 import { Header, Footer, Loading } from "./components";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import { FaChevronCircleUp } from "react-icons/fa";
@@ -50,6 +45,15 @@ const AppContent = () => {
               path="/products/single-product/:id"
               element={<ShowProducts />}
             />
+            <Route
+              path="/success"
+              element={
+                <ProtectedRoute>
+                  <Success />
+                </ProtectedRoute>
+              }
+            />
+
             <Route path="/cart" element={<ShoppingCart />} />
             <Route
               path="/admin/dashboard/*"
