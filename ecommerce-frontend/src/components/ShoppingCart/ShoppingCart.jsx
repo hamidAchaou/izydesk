@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import CartItem from "./CartItem";
 import "./ShoppingCart.css";
 import { loadStripe } from "@stripe/stripe-js";
-import apiClient from "../../api";
+import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
@@ -13,7 +13,6 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const ShoppingCart = () => {
   const { cartItems, removeFromCart, updateItemQuantity } = useCart();
-
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -30,9 +29,18 @@ const ShoppingCart = () => {
     try {
       const stripe = await stripePromise;
 
-      const response = await apiClient.post("/create-checkout-session", {
-        items: cartItems,
-      });
+      const token = localStorage.getItem("token");
+
+      const response = await axios.post(
+        "http://localhost:8000/api/create-checkout-session",
+        { items: cartItems },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const result = await stripe.redirectToCheckout({
         sessionId: response.data.id,
@@ -53,7 +61,7 @@ const ShoppingCart = () => {
     0
   );
 
-  const formattedTotal = (totalAmount + 5).toFixed(2); // Assuming +5 is for shipping or tax
+  const formattedTotal = (totalAmount + 5).toFixed(2);
 
   return (
     <main className="cart">

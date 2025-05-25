@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, CircularProgress } from "@mui/material";
 import OrdersTable from "../../../../components/Admin/Dashboards/orders/OrdersTable";
-import { fetchOrders } from "../../../../services/orderService";
-import { updateOrder } from "../../../../api/orders";
+import { getOrders, updateOrder } from "../../../../api/orders";
 
 const OrdersDashboard = () => {
   const [orders, setOrders] = useState([]);
@@ -13,11 +12,12 @@ const OrdersDashboard = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   useEffect(() => {
-    fetchOrders()
+    getOrders()
       .then((res) => setOrders(res.data))
       .catch(() => setError("Échec du chargement des commandes"))
       .finally(() => setLoading(false));
   }, []);
+  
   
   const handleAction = async (order, newStatus) => {
     try {
