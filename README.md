@@ -76,7 +76,7 @@ The React app will typically run at `http://localhost:5173`.
 To access the admin dashboard, login using the following credentials:
 
 ```
-Email: admin@example.com
+Email: admin@gmail.com
 Password: adminpassword
 ```
 
