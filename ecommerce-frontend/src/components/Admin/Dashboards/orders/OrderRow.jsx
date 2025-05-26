@@ -104,6 +104,33 @@ const OrderRow = ({ order, onAction }) => {
                   </Button>
                 </>
               ),
+              processing: (  // same buttons as pending
+                <>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    onClick={() => onAction(order, "shipped")}
+                    sx={{
+                      mr: 1,
+                      backgroundColor: "var(--accent-color)",
+                      color: "#fff",
+                      "&:hover": {
+                        backgroundColor: "var(--accent-hover-color)",
+                      },
+                    }}
+                  >
+                    Expédiée
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    size="small"
+                    onClick={() => onAction(order, "cancelled")}
+                  >
+                    Annuler
+                  </Button>
+                </>
+              ),
               shipped: (
                 <Button
                   variant="contained"
