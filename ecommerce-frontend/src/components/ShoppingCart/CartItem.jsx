@@ -14,12 +14,12 @@ const CartItem = ({ item, onRemove, onChangeQuantity }) => {
 
       <div className="cart-item">
         <div className="cart-item-img">
-          <img src={item.image} alt={item.name} />
+          <img src={item.image} alt={item.title} />
         </div>
 
         <div className="cart-item-info">
           <p className="item-category">{item.category}</p>
-          <h4 className="item-name">{item.name}</h4>
+          <h4 className="item-name">{item.title}</h4>
         </div>
 
         <div className="cart-item-quantity">

@@ -21,11 +21,14 @@
   }
 }
 
-.cart {
+cart.cart {
   background-color: #fff;
   padding: 4vh 5vh;
   border-bottom-left-radius: 1rem;
   border-top-left-radius: 1rem;
+}
+.cart h4 {
+  color: #2a2a2a;
 }
 
 @media(max-width:767px) {

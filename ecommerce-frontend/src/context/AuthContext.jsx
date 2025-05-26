@@ -6,7 +6,28 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
+    const token = localStorage.getItem("token");
+
+    if (storedUser && token) {
+      try {
+        const decoded = jwtDecode(token);
+        const now = Date.now() / 1000;
+
+        if (decoded.exp && decoded.exp < now) {
+          localStorage.removeItem("user");
+          localStorage.removeItem("token");
+          return null;
+        }
+
+        return JSON.parse(storedUser);
+      } catch (e) {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        return null;
+      }
+    }
+
+    return null;
   });
 
   const loginUser = (userData) => {

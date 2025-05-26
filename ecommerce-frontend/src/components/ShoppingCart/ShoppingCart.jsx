@@ -33,7 +33,14 @@ const ShoppingCart = () => {
 
       const response = await axios.post(
         "http://localhost:8000/api/create-checkout-session",
-        { items: cartItems },
+        {
+          items: cartItems.map((item) => ({
+            id: item.id,
+            title: item.title,
+            quantity: item.quantity,
+            price: parseFloat(item.price.replace("$", "")), // convert to number
+          })),
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -41,6 +48,7 @@ const ShoppingCart = () => {
           },
         }
       );
+      
 
       const result = await stripe.redirectToCheckout({
         sessionId: response.data.id,
@@ -57,9 +65,9 @@ const ShoppingCart = () => {
   }, [user, cartItems, navigate]);
 
   const totalAmount = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+    (acc, item) => acc + parseFloat(item.price.replace('$', '')) * item.quantity,
     0
-  );
+  );  
 
   const formattedTotal = (totalAmount + 5).toFixed(2);
 
