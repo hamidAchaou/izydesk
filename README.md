@@ -45,11 +45,14 @@ JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
 JWT_PASSPHRASE=51ac1e610b43232b3eb363e62cd12538a7fed682eb5797ecd12f8e9a97f13e3e
 ```
 
+- ajouter Stripe secret key in .env STRIPE_SECRET_KEY
+```bash
+STRIPE_SECRET_KEY
+```
+
 ### 5. Start the Symfony Development Server
 
-```bash
-symfony server:start
-```
+
 
 > Or alternatively:
 
@@ -65,6 +68,11 @@ php -S localhost:8000 -t public
 cd ../ecommerce-frontend
 npm install
 npm run dev
+```
+
+ajouter VITE_STRIPE_PUBLISHABLE_KEY in .env front end 
+```bash
+VITE_STRIPE_PUBLISHABLE_KEY
 ```
 
 The React app will typically run at `http://localhost:5173`.
