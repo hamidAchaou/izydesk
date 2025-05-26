@@ -5,6 +5,7 @@
 
 ```bash
 git clone https://github.com/hamidAchaou/izydesk.git
+cd izydesk
 cd ecommerce-api
 composer install
 ```
