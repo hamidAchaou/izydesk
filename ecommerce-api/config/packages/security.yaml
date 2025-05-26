@@ -35,6 +35,7 @@ security:
   # Access control
   access_control:
     - { path: ^/api/login, roles: PUBLIC_ACCESS }
+    - { path: ^/api/register, roles: PUBLIC_ACCESS }
     - { path: ^/api/products, roles: PUBLIC_ACCESS }
     - { path: ^/api/categories, roles: PUBLIC_ACCESS }
     - { path: ^/api/user, roles: ROLE_USER }

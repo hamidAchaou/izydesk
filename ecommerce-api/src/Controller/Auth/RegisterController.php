@@ -4,6 +4,7 @@ namespace App\Controller\Auth;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +20,8 @@ class RegisterController extends AbstractController
         Request $request,
         EntityManagerInterface $em,
         UserPasswordHasherInterface $passwordHasher,
-        ValidatorInterface $validator
+        ValidatorInterface $validator,
+        JWTTokenManagerInterface $jwtManager
     ): JsonResponse {
         $data = json_decode($request->getContent(), true);
 
@@ -34,12 +36,10 @@ class RegisterController extends AbstractController
         $phone = $data['phone'] ?? null;
         $address = $data['address'] ?? null;
 
-        // Validate required fields
         if (!$email || !$plainPassword || !$firstName || !$lastName || !$phone) {
             return $this->json(['error' => 'Missing required fields'], Response::HTTP_BAD_REQUEST);
         }
 
-        // Check if user with email already exists
         $existingUser = $em->getRepository(User::class)->findOneBy(['email' => $email]);
         if ($existingUser) {
             return $this->json(['error' => 'Email already registered'], Response::HTTP_CONFLICT);
@@ -52,21 +52,31 @@ class RegisterController extends AbstractController
         $user->setPhone($phone);
         $user->setAddress($address);
 
-        // Hash password
         $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
         $user->setPassword($hashedPassword);
 
-        // Validate entity with Symfony Validator
         $errors = $validator->validate($user);
         if (count($errors) > 0) {
             $errorsString = (string) $errors;
             return $this->json(['error' => $errorsString], Response::HTTP_BAD_REQUEST);
         }
 
-        // Save user
         $em->persist($user);
         $em->flush();
 
-        return $this->json(['message' => 'User registered successfully'], Response::HTTP_CREATED);
+        // Generate JWT token for the new user
+        $token = $jwtManager->create($user);
+
+        return $this->json([
+            'message' => 'User registered successfully',
+            'token' => $token,
+            'user' => [
+                'email' => $user->getEmail(),
+                'firstName' => $user->getFirstName(),
+                'lastName' => $user->getLastName(),
+                'phone' => $user->getPhone(),
+                'address' => $user->getAddress(),
+            ]
+        ], Response::HTTP_CREATED);
     }
 }

@@ -55,10 +55,36 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
   };
 
+  // New registerUser function - async example
+  const registerUser = async (registerData) => {
+    try {
+      // Example API call - adjust URL and method as per your backend
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(registerData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Registration failed");
+      }
+
+      const data = await response.json();
+      // Assume backend returns a token on successful registration
+      loginUser({ token: data.token });
+      return { success: true };
+    } catch (error) {
+      console.error("Registration error:", error);
+      return { success: false, message: error.message };
+    }
+  };
+
   const isAuthenticated = !!user;
 
   return (
-    <AuthContext.Provider value={{ user, loginUser, logoutUser, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, loginUser, logoutUser, registerUser, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
